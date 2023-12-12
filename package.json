@@ -1,0 +1,19 @@
+{
+  "name": "booktennis",
+  "version": "1.0.0",
+  "description": "Project for the Advanced JS course hold at FMI Sofia, winter semester 2023/2024",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pvarna/BookTennis.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pvarna/BookTennis/issues"
+  },
+  "homepage": "https://github.com/pvarna/BookTennis#readme"
+}
