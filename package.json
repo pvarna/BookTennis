@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/pvarna/BookTennis/issues"
   },
-  "homepage": "https://github.com/pvarna/BookTennis#readme"
+  "homepage": "https://github.com/pvarna/BookTennis#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2"
+  }
 }
