@@ -1,0 +1,30 @@
+body{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #facdaa;
+    font-size: x-large;
+}
+
+h1{
+  text-align: center;
+  padding-top: 10%;
+  color:#527853
+}
+input{
+    width: 300px;
+}
+label{
+    color: #EE7214
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-button{
+    color: #F9E8D9;
+    background-color:#527853 ;
+    font-size:large;
+    width: 100px;
+    height: 50px
+}
