@@ -1,7 +1,15 @@
 const userRouter = require("express").Router();
 
-userRouter.get("/", (req, res) => {
+userRouter.get("/", (_, res) => {
     res.send(`Fetch the information about all users`);
+});
+
+userRouter.post("/login", (req, res) => {
+    res.send(`Login of a user: ${JSON.stringify(req.body)}`);
+});
+
+userRouter.post("/register", (req, res) => {
+    res.send(`Registration of a user: ${JSON.stringify(req.body)}`);
 });
 
 userRouter.get("/:userId", (req, res) => {
