@@ -9,19 +9,22 @@ h1{
   padding-top: 10%;
   color:#527853
 }
-input{
+input,select{
+    font-size: 18px;
     width: 300px;
 }
+
+
 label{
     color: #EE7214
 }
-.login-form{
+.register-form{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-button{
+.register-button{
     color: #F9E8D9;
     background-color:#527853 ;
     font-size:large;
