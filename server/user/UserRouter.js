@@ -1,39 +1,25 @@
-const router = require("express").Router();
+const userRouter = require("express").Router();
 
-router.get("/view", (_, res) => {
-    res.send("Page with info about the logged user");
+userRouter.get("/", (req, res) => {
+    res.send(`Fetch the information about all users`);
 });
 
-router.get("/edit", (_, res) => {
-    res.send("Page about editing the logged user's info");
+userRouter.get("/:userId", (req, res) => {
+    const userId = +req.params.userId;
+
+    res.send(`Fetch the information about an user with id ${userId}`);
 });
 
-router.get("/reservations", (_, res) => {
-    res.send("Page with info about the logged user's reservations");
+userRouter.put("/:userId", (req, res) => { // maybe "patch" instead of "put"?
+    const userId = +req.params.userId;
+
+    res.send(`Update the information about an user with id ${userId}: ${JSON.stringify(req.body)}`);
 });
 
-router.get("/:id", (req, res) => {
-    const id = +req.params.id;
+userRouter.delete("/:userId", (req, res) => {
+    const userId = +req.params.userId;
 
-    res.send(`Page with info about an user with id ${id}`);
+    res.send(`Delete an user with id ${userId}: ${JSON.stringify(req.body)}`);
 });
 
-router.get("/:id/chat", (req, res) => {
-    const id = +req.params.id;
-
-    res.send(`Chat between the logged user and the user with id ${id}`);
-});
-
-router.get("/club/view", (_, res) => {
-    res.send("Page with info about the logged user's tennis club");
-});
-
-router.get("/club/edit", (_, res) => {
-    res.send("Page about editing the info of the logged user's tennis club");
-});
-
-router.get("/club/reservations", (_, res) => {
-    res.send("Page about the reservations in the tennis club of the logged user");
-});
-
-module.exports = router;
+module.exports = userRouter;

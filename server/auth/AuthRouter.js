@@ -1,11 +1,11 @@
-const router = require("express").Router();
+const authRouter = require("express").Router();
 
-router.get("/login", (_, res) => {
-    res.send("Login page");
+authRouter.post("/login", (req, res) => {
+    res.send(`Login of a user: ${JSON.stringify(req.body)}`);
 });
 
-router.get("/register", (_, res) => {
-    res.send("Resgistration page");
+authRouter.post("/register", (req, res) => {
+    res.send(`Registration of a user: ${JSON.stringify(req.body)}`);
 });
 
-module.exports = router;
+module.exports = authRouter;

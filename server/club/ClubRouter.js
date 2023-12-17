@@ -1,19 +1,32 @@
-const router = require("express").Router();
+const clubRouter = require("express").Router();
+const courtRouter = require("./court/CourtRouter");
 
-router.get("/register", (_, res) => {
-    res.send("Page for registration of a new tennis club");
+clubRouter.use("/:clubId/court", courtRouter);
+
+clubRouter.get("/", (req, res) => {
+    res.send("Fetch the information about all tennis clubs");
 });
 
-router.get("/:id/courts", (req, res) => {
-    const id = +req.params.id;
-    
-    res.send(`Page with info about the courts of a tennis club with id ${id}`);
+clubRouter.post("/", (req, res) => {
+    res.send(`Create a new tennis club: ${JSON.stringify(req.body)}`);
 });
 
-router.get("/:id", (req, res) => {
-    const id = +req.params.id;
+clubRouter.get("/:clubId", (req, res) => {
+    const clubId = +req.params.clubId;
 
-    res.send(`Page with info about a tennis club with id ${id}`);
+    res.send(`Fetch the information about a tennis club with id ${clubId}`);
 });
 
-module.exports = router;
+clubRouter.put("/:clubId", (req, res) => { // maybe "patch" instead of "put"?
+    const clubId = +req.params.clubId;
+
+    res.send(`Update the information about a tennis club with id ${clubId}: ${JSON.stringify(req.body)}`);
+});
+
+clubRouter.delete("/:clubId", (req, res) => {
+    const clubId = +req.params.clubId;
+
+    res.send(`Delete a tennis club with id ${clubId}: ${JSON.stringify(req.body)}`);
+});
+
+module.exports = clubRouter;
