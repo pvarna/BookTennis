@@ -17,7 +17,7 @@ clubRouter.get("/:clubId", (req, res) => {
     res.send(`Fetch the information about a tennis club with id ${clubId}`);
 });
 
-clubRouter.put("/:clubId", (req, res) => { // maybe "patch" instead of "put"?
+clubRouter.put("/:clubId", (req, res) => {
     const clubId = +req.params.clubId;
 
     res.send(`Update the information about a tennis club with id ${clubId}: ${JSON.stringify(req.body)}`);

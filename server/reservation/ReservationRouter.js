@@ -28,7 +28,7 @@ reservationRouter.get("/court/:courtId", (req, res) => {
     res.send(`Fetch the information about all reservations for a court with id ${courtId}`);
 });
 
-reservationRouter.put("/:reservationId", (req, res) => { // maybe "patch" instead of "put"?
+reservationRouter.put("/:reservationId", (req, res) => {
     const reservationId = +req.params.reservationId;
 
     res.send(`Edit the information about a reservation with id ${reservationId}: ${JSON.stringify(req.body)}`);
