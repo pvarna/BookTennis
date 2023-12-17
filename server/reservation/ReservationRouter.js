@@ -22,11 +22,10 @@ reservationRouter.get("/club/:clubId", (req, res) => {
     res.send(`Fetch the information about all reservations for a a tennis club with id ${clubId}`);
 });
 
-reservationRouter.get("/club/:clubId/court/:courtId", (req, res) => {
-    const clubId = +req.params.clubId;
+reservationRouter.get("/court/:courtId", (req, res) => {
     const courtId = +req.params.courtId;
 
-    res.send(`Fetch the information about all reservations for a court with id ${courtId} of a tennis club with id ${clubId}`);
+    res.send(`Fetch the information about all reservations for a court with id ${courtId}`);
 });
 
 reservationRouter.put("/:reservationId", (req, res) => { // maybe "patch" instead of "put"?
