@@ -7,11 +7,11 @@
 
   <body>
     <h1>Register to BookTennis</h1>
-      <form class="register-form" id ="register-form">
+    <form class="register-form" id="register-form">
       <label for="email">Email:</label>
       <input
         type="email"
-        id="email"
+        id="register-email"
         name="email"
         placeholder="Enter your email"
         required
@@ -20,7 +20,7 @@
       <label for="name">Full name:</label>
       <input
         type="text"
-        id="name"
+        id="register-name"
         name="name"
         placeholder="Enter your name"
         required
@@ -29,7 +29,7 @@
       <label for="pass">Password:</label>
       <input
         type="password"
-        id="pass"
+        id="register-pass"
         name="Password"
         placeholder="Enter your password"
         required
@@ -37,15 +37,15 @@
       <label for="phone">Phone number:</label>
       <input
         type="text"
-        id="phone"
+        id="register-phone"
         name="Phone number"
         placeholder="Enter your phone number"
         required
       /><br />
-    
+
       <label for="cars">City:</label>
 
-      <select name="city" id="city" required>
+      <select name="city" id="register-city" required>
         <option value="Varna">Varna</option>
         <option value="Sofia">Sofia</option>
         <option value="Plovdiv">Plovdiv</option>
@@ -54,14 +54,14 @@
         <option value="Ruse">Ruse</option>
       </select>
 
-      <br/>
+      <br />
       <button
-      class="register-button"
-      id="register-button-id"
-      onclick="onRegisterHandler()"
-    >
-      Register
-    </button>
-  </form>
+        class="register-button"
+        id="register-button-id"
+        onclick="onRegisterHandler()"
+      >
+        Register
+      </button>
+    </form>
   </body>
 </html>
