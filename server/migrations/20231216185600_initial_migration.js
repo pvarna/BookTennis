@@ -26,7 +26,7 @@ export async function up(knex) {
 
   await knex.schema.createTable('courts', (table) => {
     table.increments('id').primary();
-    table.string('surface').notNullable();
+    table.enu('surface', ['clay', 'hard', 'grass']).notNullable();
     table.double('price').notNullable();
     table
       .integer('club_id')
@@ -52,8 +52,8 @@ export async function up(knex) {
       .references('id')
       .inTable('courts')
       .onDelete('cascade');
-    table.integer('duration').notNullable();
-    table.datetime('start_time', { precision: 6 }).defaultTo(knex.fn.now(6))
+    table.integer('duration_in_minutes').notNullable();
+    table.datetime('start_time', { precision: 6 }).defaultTo(knex.fn.now(6));
 
     table.index('id');
   });
