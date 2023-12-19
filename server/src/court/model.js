@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { ClubModel } from './club';
+import { ClubModel } from '../club/model';
 
 export class CourtModel extends Model {
   static tableName = 'courts';
