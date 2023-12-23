@@ -4,7 +4,6 @@ import { Login } from "./routes/login/Login";
 import { ToastContainer } from "react-toastify";
 import { Register } from "./routes/register/Register";
 import { HomePage } from "./routes/home-page/HomePage";
-import { Profile } from "./routes/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -15,10 +14,6 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
   },
   {
     path: "/home",

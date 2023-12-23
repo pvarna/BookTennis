@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import { errorToast } from "../../utils/customToast";
-
+import { tennisHomeImageUrl } from "../../constants";
 
 function Copyright(props) {
   return (
