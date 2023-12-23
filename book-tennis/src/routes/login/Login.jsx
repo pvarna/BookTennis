@@ -50,14 +50,13 @@ export const Login = () => {
   // };
 
   //TODO:  If logged in, navigate to home page
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const pass = data.get("password");
     if (!email || !pass) {
-      console.log("im if")
       // const valid = validateUser(email.toString(), pass.toString());
       // if(valid){
       //   dispatch(setEmail(email));
@@ -66,7 +65,6 @@ export const Login = () => {
       // }
       errorToast("Please input your login data to proceed.");
     }
-
   };
 
   return (
@@ -79,8 +77,7 @@ export const Login = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage:
-              `url(${tennisHomeImageUrl})`,
+            backgroundImage: `url(${tennisHomeImageUrl})`,
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -103,7 +100,7 @@ export const Login = () => {
             <Avatar sx={{ m: 1, backgroundColor: "#EE7214" }} />
 
             <Typography component="h1" variant="h5">
-           Log in to Book Tennis
+              Log in to Book Tennis
             </Typography>
             <Box
               component="form"
@@ -137,7 +134,7 @@ export const Login = () => {
                 type="submit"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214" }}
               >
-               Login
+                Login
               </Button>
               <Grid container>
                 <Grid item>
