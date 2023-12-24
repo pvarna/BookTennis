@@ -1,5 +1,7 @@
-const clubRouter = require("express").Router();
-const courtRouter = require("./court/CourtRouter");
+import { Router } from 'express';
+import { courtRouter } from '../court/court-router.js';
+
+export const clubRouter = new Router()
 
 clubRouter.use("/:clubId/court", courtRouter);
 
@@ -28,5 +30,3 @@ clubRouter.delete("/:clubId", (req, res) => {
 
     res.send(`Delete a tennis club with id ${clubId}: ${JSON.stringify(req.body)}`);
 });
-
-module.exports = clubRouter;

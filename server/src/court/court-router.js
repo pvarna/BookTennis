@@ -1,4 +1,6 @@
-const courtRouter = require("express").Router({mergeParams: true});
+import { Router } from 'express';
+
+export const courtRouter = new Router();
 
 courtRouter.get("/", (req, res) => {
     const clubId = +req.params.clubId;
@@ -32,5 +34,3 @@ courtRouter.delete("/:courtId", (req, res) => {
     
     res.send(`Delete a court with id ${courtId} in a tennis club with id ${clubId}: ${JSON.stringify(req.body)}`);
 });
-
-module.exports = courtRouter;
