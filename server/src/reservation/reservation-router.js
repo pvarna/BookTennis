@@ -1,4 +1,6 @@
-const reservationRouter = require("express").Router();
+import { Router } from 'express';
+
+export const reservationRouter = new Router()
 
 reservationRouter.post("/", (req, res) => {
     res.send(`Create a new reservation: ${JSON.stringify(req.body)}`);
@@ -39,5 +41,3 @@ reservationRouter.delete("/:reservationId", (req, res) => {
 
     res.send(`Delete a reservation with id ${reservationId}: ${JSON.stringify(req.body)}`);
 });
-
-module.exports = reservationRouter;

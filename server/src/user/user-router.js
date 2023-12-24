@@ -1,4 +1,6 @@
-const userRouter = require("express").Router();
+import { Router } from 'express';
+
+export const userRouter = new Router()
 
 userRouter.get("/", (_, res) => {
     res.send(`Fetch the information about all users`);
@@ -29,5 +31,3 @@ userRouter.delete("/:userId", (req, res) => {
 
     res.send(`Delete an user with id ${userId}: ${JSON.stringify(req.body)}`);
 });
-
-module.exports = userRouter;
