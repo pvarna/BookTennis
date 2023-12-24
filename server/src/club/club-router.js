@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { courtRouter } from '../court/router.js';
+import { courtRouter } from '../court/court-router.js';
 
 export const clubRouter = new Router()
 
