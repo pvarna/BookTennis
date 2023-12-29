@@ -16,4 +16,8 @@ export const config = {
     user: process.env.DATABASE_USER ?? 'postgres',
     password: process.env.DATABASE_PASSWORD ?? 'postgres',
   },
+  jwt: {
+    privateKey: process.env.JWT_PRIVATE_KEY ?? 'default_key',
+    expiresIn: process.env.JWT_EXPIRES_IN ?? '1h',
+  },
 };
