@@ -14,3 +14,8 @@ The application lets users:
 
 There is an admin user who can:
 - review new club creation requests and approve/cancel them
+
+## Running the app
+For details about the database and the server refer to this [README](server/README.md).
+
+For details about the frontend refer to this [README](client/README.md)

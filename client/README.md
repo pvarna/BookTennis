@@ -1,7 +1,16 @@
 
+# Overview
+The app is configured with `React` and `Jest`. You could check out the available scripts below.
+
+## First time using the app
+If it is your first time using the app, you will need to execute the following before proceeding with executing any of the available scripts:
+```bash
+npm install
+```
+
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory (`booktennis/client`), you can run:
 
 ### `npm start`
 
