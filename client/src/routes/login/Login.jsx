@@ -1,36 +1,47 @@
 import {
+  Avatar,
   Box,
   Button,
   CssBaseline,
   Grid,
-  MenuItem,
+  Link,
   Paper,
   TextField,
   ThemeProvider,
   Typography,
   createTheme,
 } from "@mui/material";
-import { Cities } from "../../constants";
-import { tennisHomeImageUrl } from "../../constants";
+import "react-toastify/dist/ReactToastify.css";
 import { errorToast } from "../../utils/customToast";
+import { tennisHomeImageUrl } from "../../constants";
+
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      Book Tennis {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 const theme = createTheme();
 
-export const Register = () => {
+export const Login = () => {
+  //TODO:  If logged in, navigate to home page
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const { email, password, names, phone, city } = data;
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      name: data.get("names"),
-      phone: data.get("phone"),
-      city: data.get("city"),
-    });
-
-    if (!email || !password || !names || !phone || !city) {
-      errorToast("Please provide all required data to proceed.");
+    const email = data.get("email");
+    const pass = data.get("password");
+    if (!email || !pass) {
+      errorToast("Please input your login data to proceed.");
     }
   };
 
@@ -64,8 +75,10 @@ export const Register = () => {
               alignItems: "center",
             }}
           >
+            <Avatar sx={{ m: 1, backgroundColor: "#EE7214" }} />
+
             <Typography component="h1" variant="h5">
-              Register to BookTennis
+              Log in to Book Tennis
             </Typography>
             <Box
               component="form"
@@ -77,17 +90,8 @@ export const Register = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="names"
-                label="Full name"
-                name="names"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -102,40 +106,22 @@ export const Register = () => {
                 id="password"
                 autoComplete="current-password"
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="phone"
-                label="Phone number"
-                type="phone"
-                id="phone"
-              />
-              <TextField
-                id="city"
-                name="city"
-                select
-                required
-                fullWidth
-                defaultValue={""}
-                label="City"
-                helperText="Please choose the city you live in."
-              >
-                {Cities.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-
               <Button
                 fullWidth
                 variant="contained"
                 type="submit"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214" }}
               >
-                Register
+                Login
               </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Click here to register"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

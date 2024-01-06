@@ -1,69 +1,29 @@
 import {
-  Avatar,
   Box,
   Button,
   CssBaseline,
   Grid,
-  Link,
+  MenuItem,
   Paper,
   TextField,
   ThemeProvider,
   Typography,
   createTheme,
 } from "@mui/material";
-import "react-toastify/dist/ReactToastify.css";
-import { errorToast } from "../../utils/customToast";
+import { Cities } from "../../constants";
 import { tennisHomeImageUrl } from "../../constants";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      Book Tennis {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { errorToast } from "../../utils/customToast";
 
 const theme = createTheme();
 
-export const Login = () => {
-  // const validateUser = (email, pass) => {
-  //   const filteredByEmail = allUsers.filter((user) => user.email === email);
-  //   if (filteredByEmail.length === 0) {
-  //     errorToast("Имейлът, който въведохте не е намерен. Моля опитайте отново.");
-  //     return;
-  //   }
-  //   const filteredByPass = filteredByEmail.filter(
-  //     (user) => user.password === pass
-  //   );
-  //   if (filteredByPass.length === 0) {
-  //     errorToast("Паролата, която въведохте не е правилна. Моля опитайте отново.");
-  //     return;
-  //   }
-  //   return filteredByPass.length > 0;
-  // };
-
-  //TODO:  If logged in, navigate to home page
-
+export const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get("email");
-    const pass = data.get("password");
-    if (!email || !pass) {
-      // const valid = validateUser(email.toString(), pass.toString());
-      // if(valid){
-      //   dispatch(setEmail(email));
-      //   dispatch(setPassword(pass));
-      //   //TODO: navigate to next page -> home page (/home)
-      // }
-      errorToast("Please input your login data to proceed.");
+    const { email, password, names, phone, city } = data;
+
+    if (!email || !password || !names || !phone || !city) {
+      errorToast("Please provide all required data to proceed.");
     }
   };
 
@@ -97,10 +57,8 @@ export const Login = () => {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, backgroundColor: "#EE7214" }} />
-
             <Typography component="h1" variant="h5">
-              Log in to Book Tennis
+              Register to BookTennis
             </Typography>
             <Box
               component="form"
@@ -112,8 +70,17 @@ export const Login = () => {
                 margin="normal"
                 required
                 fullWidth
+                id="names"
+                label="Full name"
+                name="names"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="email"
-                label="Email"
+                label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -128,22 +95,40 @@ export const Login = () => {
                 id="password"
                 autoComplete="current-password"
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="phone"
+                label="Phone number"
+                type="phone"
+                id="phone"
+              />
+              <TextField
+                id="city"
+                name="city"
+                select
+                required
+                fullWidth
+                defaultValue={""}
+                label="City"
+                helperText="Please choose the city you live in."
+              >
+                {Cities.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
               <Button
                 fullWidth
                 variant="contained"
                 type="submit"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214" }}
               >
-                Login
+                Register
               </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Click here to register"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
