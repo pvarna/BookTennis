@@ -14,21 +14,8 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { errorToast } from "../../utils/customToast";
 import { tennisHomeImageUrl } from "../../constants";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      Book Tennis {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { registerPath } from "../constants";
+import { Copyright } from "../../components/copyright/copyright";
 
 const theme = createTheme();
 
@@ -116,7 +103,7 @@ export const Login = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/register" variant="body2">
+                  <Link href={registerPath} variant="body2">
                     {"Don't have an account? Click here to register"}
                   </Link>
                 </Grid>

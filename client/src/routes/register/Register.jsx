@@ -3,6 +3,7 @@ import {
   Button,
   CssBaseline,
   Grid,
+  Link,
   MenuItem,
   Paper,
   TextField,
@@ -13,6 +14,8 @@ import {
 import { Cities } from "../../constants";
 import { tennisHomeImageUrl } from "../../constants";
 import { errorToast } from "../../utils/customToast";
+import { loginPath } from "../constants";
+import { Copyright } from "../../components/copyright/copyright";
 
 const theme = createTheme();
 
@@ -129,6 +132,14 @@ export const Register = () => {
               >
                 Register
               </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href={loginPath} variant="body2">
+                    {"Already have an account? Click here to login"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
