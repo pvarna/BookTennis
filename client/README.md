@@ -8,6 +8,8 @@ If it is your first time using the app, you will need to execute the following b
 npm install
 ```
 
+You would also need to create a `.env` file in the `client` directory and fill it in with the required in the [.env.template](.env.template) file fields.
+
 ## Available Scripts
 
 In the project directory (`booktennis/client`), you can run:
