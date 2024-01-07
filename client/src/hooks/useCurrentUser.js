@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { UserStorage } from '../utils/user-storage';
 import { useEventBus } from './useEventBus';
+import { EVENTS } from '../constants';
 
 const CurrentUserContext = createContext(undefined);
 
@@ -12,8 +13,8 @@ export function CurrentUserContextProvider({ children }) {
   const userStorage = new UserStorage();
   const [user, setUser] = useState(userStorage.currentUser);
 
-  useEventBus('login', setUser);
-  useEventBus('logout', () => setUser(undefined));
+  useEventBus(EVENTS.login, setUser);
+  useEventBus(EVENTS.logout, () => setUser(undefined));
 
   return (
     <CurrentUserContext.Provider value={user}>

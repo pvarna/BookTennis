@@ -14,6 +14,7 @@ import { errorToast, successToast } from '../../utils/customToast';
 import { userService } from '../../services/user-service';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../App';
 
 const theme = createTheme();
 
@@ -36,7 +37,7 @@ export const Register = () => {
 
     const user = await userService.register(formData);
     successToast(`Successfully registered ${user.fullName}`);
-    navigate('/');
+    navigate(ROUTES.home);
   };
 
   return (

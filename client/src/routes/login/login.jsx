@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { userService } from '../../services/user-service';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { ROUTES } from '../../App';
 
 function Copyright(props) {
   return (
@@ -57,7 +58,7 @@ export const Login = () => {
     }
 
     await userService.login(loginData);
-    navigate('/');
+    navigate(ROUTES.home);
   };
 
   return (

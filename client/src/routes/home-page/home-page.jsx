@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { userService } from '../../services/user-service';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../App';
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const HomePage = () => {
       <Button
         onClick={() => {
           userService.logout();
-          navigate('/login');
+          navigate(ROUTES.login);
         }}
       >
         Log out

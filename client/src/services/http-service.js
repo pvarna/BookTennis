@@ -1,4 +1,5 @@
 import { config as appConfig } from '../config';
+import { EVENTS } from '../constants';
 import { EventBus } from '../hooks/useEventBus';
 import { UserStorage } from '../utils/user-storage';
 
@@ -55,7 +56,7 @@ export class HttpService {
       switch (error.name) {
         case 'AuthenticationError':
           this.userStorage.delete();
-          EventBus.emit('logout');
+          EventBus.emit(EVENTS.logout);
           return new Error('Authentication Error');
         default:
           return new Error('Something went wrong');

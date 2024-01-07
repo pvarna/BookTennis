@@ -1,3 +1,4 @@
+import { EVENTS } from '../constants';
 import { EventBus } from '../hooks/useEventBus';
 import { UserStorage } from '../utils/user-storage';
 import { HttpService } from './http-service';
@@ -15,7 +16,7 @@ class UserService {
 
     this.userStorage.save(data.token);
     if (this.userStorage.currentUser) {
-      EventBus.emit('login', this.userStorage.currentUser);
+      EventBus.emit(EVENTS.login, this.userStorage.currentUser);
     }
   }
 
@@ -29,7 +30,7 @@ class UserService {
 
   logout() {
     this.userStorage.delete();
-    EventBus.emit('logout');
+    EventBus.emit(EVENTS.logout);
   }
 }
 
