@@ -4,19 +4,25 @@ import { Login } from "./routes/login/Login";
 import { ToastContainer } from "react-toastify";
 import { Register } from "./routes/register/Register";
 import { HomePage } from "./routes/home-page/HomePage";
+import { LandingPage } from "./routes/landing-page/LandingPage";
+import { homePath, loginPath, registerPath, root } from "./routes/constants";
+
 
 const router = createBrowserRouter([
   {
-    //TODO: change this to homepage and add a new route for login
-    path: "/",
+    path: root,
+    element: <LandingPage />,
+  },
+  {
+    path: loginPath,
     element: <Login />,
   },
   {
-    path: "/register",
+    path: registerPath,
     element: <Register />,
   },
   {
-    path: "/home",
+    path: homePath,
     element: <HomePage />,
   },
 ]);
