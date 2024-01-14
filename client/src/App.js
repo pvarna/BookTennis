@@ -5,28 +5,25 @@ import { ToastContainer } from 'react-toastify';
 import { Register } from './routes/register/register';
 import { HomePage } from './routes/home-page/home-page';
 import { CurrentUserContextProvider } from './hooks/useCurrentUser';
+import { homePath, loginPath, registerPath, root } from "./routes/constants";
+import { LandingPage } from './routes/landing-page/landing-page';
 
-export const ROUTES = {
-  home: '/',
-  login: '/login',
-  register: 'register',
-};
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.home,
-    element: <HomePage />,
+    path: root,
+    element: <LandingPage />,
   },
   {
-    path: ROUTES.login,
+    path: loginPath,
     element: <Login />,
   },
   {
-    path: ROUTES.register,
+    path:registerPath,
     element: <Register />,
   },
   {
-    path: '*',
+    path: homePath,
     element: <HomePage />,
   },
 ]);
