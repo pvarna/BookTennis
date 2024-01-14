@@ -18,22 +18,8 @@ import { useState } from 'react';
 import { userService } from '../../services/user-service';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import { ROUTES } from '../../App';
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      Book Tennis {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { homePath, registerPath } from "../constants";
+import { Copyright } from "../../components/copyright/copyright";
 
 const theme = createTheme();
 
@@ -58,7 +44,7 @@ export const Login = () => {
     }
 
     await userService.login(loginData);
-    navigate(ROUTES.home);
+    navigate(homePath);
   };
 
   return (
@@ -140,7 +126,7 @@ export const Login = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href='/register' variant='body2'>
+                <Link href={registerPath} variant="body2">
                     {"Don't have an account? Click here to register"}
                   </Link>
                 </Grid>

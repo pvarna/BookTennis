@@ -7,6 +7,7 @@ import {
   TextField,
   ThemeProvider,
   Typography,
+  Link,
   createTheme,
 } from '@mui/material';
 import { tennisHomeImageUrl } from '../../constants';
@@ -14,7 +15,8 @@ import { errorToast, successToast } from '../../utils/customToast';
 import { userService } from '../../services/user-service';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../App';
+import { loginPath, homePath } from "../constants";
+import { Copyright } from "../../components/copyright/copyright";
 
 const theme = createTheme();
 
@@ -37,7 +39,7 @@ export const Register = () => {
 
     const user = await userService.register(formData);
     successToast(`Successfully registered ${user.fullName}`);
-    navigate(ROUTES.home);
+    navigate(homePath);
   };
 
   return (
@@ -143,6 +145,14 @@ export const Register = () => {
               >
                 Register
               </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href={loginPath} variant="body2">
+                    {"Already have an account? Click here to login"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
