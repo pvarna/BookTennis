@@ -32,7 +32,7 @@ export const Login = () => {
   const user = useCurrentUser()
   
   if (user) {
-    return <Navigate to="/"/>
+    return <Navigate to={homePath}/>
   }
 
   const handleSubmit = async (event) => {
