@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { ClubModel } from '../club/model';
+import { ReservationsModel } from '../reservation/reservation-model.js';
 
 export class CourtModel extends Model {
   static tableName = 'courts';
@@ -9,16 +9,16 @@ export class CourtModel extends Model {
   price;
   clubId;
 
-  club;
+  reservations;
 
   static relationMappings = {
-    club: {
-      relation: Model.BelongsToOneRelation,
-      modelClass: ClubModel,
+    reservations: {
+      relation: Model.HasManyRelation,
+      modelClass: ReservationsModel,
       join: {
-        from: 'courts.club_id',
-        to: 'clubs.id',
+        from: 'courts.id',
+        to: 'reservations.court_id',
       },
     },
-  }
+  };
 }

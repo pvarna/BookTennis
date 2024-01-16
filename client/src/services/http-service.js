@@ -47,7 +47,7 @@ export class HttpService {
         },
       }
     );
-
+console.log(response)
     // TODO: Better error handling
     if (!response.ok) {
       const responseText = await response.text();
@@ -57,9 +57,9 @@ export class HttpService {
         case 'AuthenticationError':
           this.userStorage.delete();
           EventBus.emit(EVENTS.logout);
-          return new Error('Authentication Error');
+          throw new Error('Authentication Error');
         default:
-          return new Error('Something went wrong');
+          throw new Error('Something went wrong');
       }
     }
 

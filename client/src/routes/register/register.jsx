@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   CssBaseline,
   Grid,
   Paper,
@@ -15,6 +16,8 @@ import { userService } from '../../services/user-service';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../App';
+import { useAsyncAction } from '../../hooks/use-async-action';
+import { ErrorContainer } from '../../components/error-container';
 
 const theme = createTheme();
 
@@ -27,7 +30,11 @@ export const Register = () => {
     phone: '',
   });
 
-  const handleSubmit = async (event) => {
+  const {
+    error,
+    loading,
+    trigger: handleSubmit,
+  } = useAsyncAction(async (event) => {
     event.preventDefault();
 
     if (Object.values(formData).filter((v) => v === '').length > 0) {
@@ -38,7 +45,11 @@ export const Register = () => {
     const user = await userService.register(formData);
     successToast(`Successfully registered ${user.fullName}`);
     navigate(ROUTES.home);
-  };
+  });
+
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -143,6 +154,7 @@ export const Register = () => {
               >
                 Register
               </Button>
+              {!!error?.message && <ErrorContainer error={error.message} />}
             </Box>
           </Box>
         </Grid>

@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   CssBaseline,
   Grid,
   Link,
@@ -19,6 +20,8 @@ import { userService } from '../../services/user-service';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { ROUTES } from '../../App';
+import { useAsyncAction } from '../../hooks/use-async-action';
+import { ErrorContainer } from '../../components/error-container';
 
 function Copyright(props) {
   return (
@@ -43,13 +46,13 @@ export const Login = () => {
     email: '',
     password: '',
   });
-  const user = useCurrentUser()
-  
-  if (user) {
-    return <Navigate to="/"/>
-  }
+  const user = useCurrentUser();
 
-  const handleSubmit = async (event) => {
+  const {
+    error,
+    loading,
+    trigger: handleSubmit,
+  } = useAsyncAction(async (event) => {
     event.preventDefault();
 
     if (loginData.email === '' || loginData.password === '') {
@@ -59,7 +62,15 @@ export const Login = () => {
 
     await userService.login(loginData);
     navigate(ROUTES.home);
-  };
+  });
+
+  if (user) {
+    return <Navigate to='/' />;
+  }
+
+  if (loading) {
+    return <CircularProgress />
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -138,6 +149,7 @@ export const Login = () => {
               >
                 Login
               </Button>
+              {!!error?.message && <ErrorContainer error={error.message} />}
               <Grid container>
                 <Grid item>
                   <Link href='/register' variant='body2'>

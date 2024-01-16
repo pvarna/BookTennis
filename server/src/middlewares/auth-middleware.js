@@ -36,4 +36,4 @@ export const authMiddleware = requestHandler(async (req, res, next) => {
   }
 
   next();
-});
+}, []);
