@@ -5,42 +5,43 @@ import { ToastContainer } from 'react-toastify';
 import { Register } from './routes/register/register';
 import { HomePage } from './routes/home-page/home-page';
 import { CurrentUserContextProvider } from './hooks/useCurrentUser';
+import {
+  clubPath,
+  dashboardPath,
+  homePath,
+  loginPath,
+  registerPath,
+  root,
+} from './routes/constants';
+import { LandingPage } from './routes/landing-page/landing-page';
 import { Dashboard } from './routes/dashboard/dashboard';
 import { Club } from './routes/club/club';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 
-export const ROUTES = {
-  home: '/',
-  login: 'login',
-  register: 'register',
-  dashboard: 'dashboard',
-  club: 'club',
-};
-
 const router = createBrowserRouter([
   {
-    path: ROUTES.home,
-    element: <HomePage />,
+    path: root,
+    element: <LandingPage />,
   },
   {
-    path: ROUTES.login,
+    path: loginPath,
     element: <Login />,
   },
   {
-    path: ROUTES.register,
+    path: registerPath,
     element: <Register />,
   },
   {
-    path: ROUTES.dashboard,
+    path: dashboardPath,
     element: <Dashboard />,
   },
   {
-    path: `${ROUTES.club}/:clubId`,
+    path: `${clubPath}/:clubId`,
     element: <Club />,
   },
   {
-    path: '*',
+    path: homePath,
     element: <HomePage />,
   },
 ]);
