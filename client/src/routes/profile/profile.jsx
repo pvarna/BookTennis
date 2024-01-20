@@ -1,3 +1,4 @@
+import { Navbar } from "../../components/navbar/navbar";
 import {
   Box,
   CssBaseline,
@@ -8,15 +9,13 @@ import {
   createTheme,
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-import { Navbar } from "../../components/navbar/navbar";
 
 const theme = createTheme();
 
-export const HomePage = () => {
-  // TODO: visualise courts
-
+export const Profile = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <div>
+      <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "10vh" }}>
         <CssBaseline />
         <Navbar/>
@@ -31,11 +30,12 @@ export const HomePage = () => {
             }}
           >
             <Typography component="h1" variant="h3" color="#EE7214">
-              Tennis clubs
+              Your profile
             </Typography>
           </Box>
         </Grid>
       </Grid>
     </ThemeProvider>
-  );
+    </div>
+  )
 };
