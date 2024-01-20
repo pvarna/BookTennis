@@ -1,5 +1,3 @@
-import { ErrorPage } from "../../components/error-page/error-page";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { Navbar } from "../../components/navbar/navbar";
 import {
   Box,
@@ -11,19 +9,10 @@ import {
   createTheme,
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-import { ErrorType } from "../../components/error-page/constants";
 
 const theme = createTheme();
 
-
 export const Profile = () => {
-  const user = useCurrentUser();
-
-  // TODO: get info for user and visualise it
-  if (!user) {
-    return <ErrorPage type={ErrorType.NoSession} />;
-  }
-
   return (
     <div>
       <ThemeProvider theme={theme}>
