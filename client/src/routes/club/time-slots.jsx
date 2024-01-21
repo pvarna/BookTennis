@@ -5,21 +5,21 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from '@mui/material';
-import { Flex } from '../../components/flex';
-import { range } from '../../utils/lib';
-import { useMemo, useState } from 'react';
-import { DateTime } from 'luxon';
-import { useAsyncAction } from '../../hooks/use-async-action';
-import { reservationService } from '../../services/reservation-service';
-import { useCurrentUser } from '../../hooks/useCurrentUser';
-import { ErrorContainer } from '../../components/error-container';
+} from "@mui/material";
+import { Flex } from "../../components/flex";
+import { range } from "../../utils/lib";
+import { useMemo, useState } from "react";
+import { DateTime } from "luxon";
+import { useAsyncAction } from "../../hooks/use-async-action";
+import { reservationService } from "../../services/reservation-service";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { ErrorContainer } from "../../components/error-container";
 
 const areSameDate = (date, otherDate) => {
   return (
-    date.hasSame(otherDate, 'day') &&
-    date.hasSame(otherDate, 'month') &&
-    date.hasSame(otherDate, 'year')
+    date.hasSame(otherDate, "day") &&
+    date.hasSame(otherDate, "month") &&
+    date.hasSame(otherDate, "year")
   );
 };
 
@@ -42,7 +42,7 @@ export const TimeSlots = ({
     loading,
   } = useAsyncAction(async () => {
     await reservationService.makeReservation({
-      startingTime: date.startOf('day').plus({ hours: selectedSlot }),
+      startingTime: date.startOf("day").plus({ hours: selectedSlot }),
       userId: user?.id,
       courtId,
     });
@@ -68,9 +68,12 @@ export const TimeSlots = ({
   if (loading) {
     return <CircularProgress />;
   }
-console.log(!!error?.message)
+  console.log(!!error?.message);
   return (
-    <Flex flexDirection='column'>
+    <Flex
+      flexDirection="row"
+      sx={{ alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}
+    >
       {slots.map((slot) => (
         <Button
           disabled={reservedHours.includes(slot)}
@@ -80,14 +83,14 @@ console.log(!!error?.message)
             setIsOpen(true);
           }}
           sx={{
-            border: '1px solid black',
-            color: 'black',
-            padding: '8px',
-            borderRadius: '8px',
-            backgroundColor: 'green',
-            '&.Mui-disabled': {
-              background: 'red',
-              color: 'black',
+            border: "1px solid black",
+            color: "black",
+            padding: "8px",
+            borderRadius: "8px",
+            backgroundColor: "#BED754",
+            "&.Mui-disabled": {
+              backgroundColor: "#750E21",
+              color: "white",
             },
           }}
         >{`${slot}:00 - ${slot + 1}:00`}</Button>
@@ -95,13 +98,17 @@ console.log(!!error?.message)
       <Dialog open={isOpen}>
         <DialogTitle>
           {`Are you sure you want to reserve this court for 
-          ${selectedSlot}:00 - ${selectedSlot + 1}:00`}
+          ${selectedSlot}:00 - ${selectedSlot + 1}:00?`}
         </DialogTitle>
         <DialogContent>
-          {!!error?.message && <ErrorContainer error={error.message} />}
+          {!!error?.message && (
+            <ErrorContainer error={"You are not logged in."} />
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit}>yes</Button>
+          <Button onClick={handleSubmit} disabled={!!error}>
+            yes
+          </Button>
           <Button
             onClick={() => {
               setIsOpen(false);
