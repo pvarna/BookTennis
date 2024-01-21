@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { DateTime } from 'luxon';
 import { Flex } from '../../components/flex';
 import { DatePicker } from '@mui/x-date-pickers';
+import { Page } from '../../components/page/page';
 
 export const Club = () => {
   const { clubId } = useParams();
@@ -23,36 +24,38 @@ export const Club = () => {
   }
 
   if (!data?.club) {
-    return <ErrorContainer error={"Invalid club id"}/>
+    return <ErrorContainer error={'Invalid club id'} />;
   }
 
   return (
-    <Box>
-      <Typography variant='h2'>{data?.club.name}</Typography>
-      <DatePicker
-        label='Choose date'
-        value={date}
-        onChange={(value) => setDate(value)}
-      />
-      {!!data?.club &&
-        data.club.courts.map((court) => (
-          <Flex
-            key={court.id}
-            flexDirection='column'
-            sx={{ alignItems: 'start' }}
-          >
-            <Flex flexDirection='column'>
-              <Typography>{`Surface: ${court.surface}`}</Typography>
-              <Typography>{`Price: ${court.price}`}</Typography>
+    <Page>
+      <Box>
+        <Typography variant='h2'>{data?.club.name}</Typography>
+        <DatePicker
+          label='Choose date'
+          value={date}
+          onChange={(value) => setDate(value)}
+        />
+        {!!data?.club &&
+          data.club.courts.map((court) => (
+            <Flex
+              key={court.id}
+              flexDirection='column'
+              sx={{ alignItems: 'start' }}
+            >
+              <Flex flexDirection='column'>
+                <Typography>{`Surface: ${court.surface}`}</Typography>
+                <Typography>{`Price: ${court.price}`}</Typography>
+              </Flex>
+              <TimeSlots
+                courtId={court.id}
+                reservations={court.reservations}
+                date={date}
+              />
             </Flex>
-            <TimeSlots
-              courtId={court.id}
-              reservations={court.reservations}
-              date={date}
-            />
-          </Flex>
-        ))}
-      {!!error?.message && <ErrorContainer error={error.message} />}
-    </Box>
+          ))}
+        {!!error?.message && <ErrorContainer error={error.message} />}
+      </Box>
+    </Page>
   );
 };

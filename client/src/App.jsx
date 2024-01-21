@@ -3,14 +3,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Login } from './routes/login/login';
 import { ToastContainer } from 'react-toastify';
 import { Register } from './routes/register/register';
-import { HomePage } from './routes/home-page/home-page';
+import { BrowseClubs } from './routes/browse-clubs/browse-clubs';
 import { CurrentUserContextProvider } from './hooks/useCurrentUser';
 import {
   chatPath,
   clubsApprovalPath,
   createClubsPath,
   clubPath,
-  dashboardPath,
   homePath,
   loginPath,
   registerPath,
@@ -18,7 +17,6 @@ import {
   profilePath,
 } from './routes/constants';
 import { LandingPage } from './routes/landing-page/landing-page';
-import { Dashboard } from './routes/dashboard/dashboard';
 import { Club } from './routes/club/club';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
@@ -42,12 +40,11 @@ function App() {
                 <Route index path={root} element={<LandingPage />} />
                 <Route path={loginPath} element={<Login />} />
                 <Route path={registerPath} element={<Register />} />
-                <Route path={homePath} element={<HomePage />} />
+                <Route path={homePath} element={<BrowseClubs />} />
                 <Route path={chatPath} element={<Chat />} />
                 <Route path={profilePath} element={<Profile />} />
                 <Route path={createClubsPath} element={<CreateClub />} />
                 <Route path={clubsApprovalPath} element={<ApproveClubs />} />
-                <Route path={dashboardPath} element={<Dashboard />} />
                 <Route path={`${clubPath}/:clubId`} element={<Club />} />
               </Route>
               <Route

@@ -1,11 +1,5 @@
-import { Navbar } from "../../components/navbar/navbar";
+import { Page } from '../../components/page/page';
 
 export const ApproveClubs = () => {
-
-  return (
-    <div>
-      <Navbar />
-      This will be the club approval page
-    </div>
-  );
+  return <Page>This will be the club approval page</Page>;
 };
