@@ -1,6 +1,5 @@
 import { Model } from 'objection';
-import { CourtModel } from './court';
-import { UserModel } from './user';
+import { UserModel } from '../user/user-model.js';
 
 export class ReservationsModel extends Model {
   static tableName = 'reservations';
@@ -9,10 +8,9 @@ export class ReservationsModel extends Model {
   userId;
   courtId;
   startTime;
-  duration;
+  durationInMinutes;
 
   createdBy;
-  court;
 
   static relationMappings = {
     createdBy: {
@@ -23,13 +21,5 @@ export class ReservationsModel extends Model {
         to: 'users.id',
       },
     },
-    club: {
-      relation: Model.BelongsToOneRelation,
-      modelClass: CourtModel,
-      join: {
-        from: 'reservations.court_id',
-        to: 'courts.id',
-      },
-    },
-  }
+  };
 }

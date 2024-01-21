@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   CssBaseline,
   Grid,
   Link,
@@ -18,8 +19,10 @@ import { useState } from 'react';
 import { userService } from '../../services/user-service';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import { homePath, registerPath } from "../constants";
+import { homePath, registerPath, root } from "../constants";
 import { Copyright } from "../../components/copyright/copyright";
+import { useAsyncAction } from '../../hooks/use-async-action';
+import { ErrorContainer } from '../../components/error-container';
 
 const theme = createTheme();
 
@@ -31,11 +34,11 @@ export const Login = () => {
   });
   const user = useCurrentUser()
   
-  if (user) {
-    return <Navigate to={homePath}/>
-  }
-
-  const handleSubmit = async (event) => {
+  const {
+    error,
+    loading,
+    trigger: handleSubmit,
+  } = useAsyncAction(async (event) => {
     event.preventDefault();
 
     if (loginData.email === '' || loginData.password === '') {
@@ -45,7 +48,15 @@ export const Login = () => {
 
     await userService.login(loginData);
     navigate(homePath);
-  };
+  });
+
+  if (user) {
+    return <Navigate to={root} />;
+  }
+
+  if (loading) {
+    return <CircularProgress />
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -124,6 +135,7 @@ export const Login = () => {
               >
                 Login
               </Button>
+              {!!error?.message && <ErrorContainer error={error.message} />}
               <Grid container>
                 <Grid item>
                 <Link href={registerPath} variant="body2">

@@ -1,6 +1,7 @@
 import { requestHandler } from '../utils/request-handler.js';
 import { authMiddleware } from '../middlewares/auth-middleware.js';
 import { Router } from 'express';
+import { reservationService } from './reservation-service.js';
 
 export const reservationRouter = new Router();
 
@@ -55,9 +56,15 @@ reservationRouter.get(
 reservationRouter.post(
   '/',
   authMiddleware,
-  requestHandler((req, res) => {
-    res.send(`Create a new reservation: ${JSON.stringify(req.body)}`);
-  })
+  requestHandler(
+    async (req, res) => {
+      const { userId, courtId, startingTime } = req.body;
+
+      await reservationService.makeReservation(userId, courtId, startingTime);
+
+      res.status(200).send({});
+    },
+  )
 );
 
 reservationRouter.put(

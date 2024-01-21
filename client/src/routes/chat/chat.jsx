@@ -1,12 +1,5 @@
-import { Navbar } from "../../components/navbar/navbar";
+import { Page } from '../../components/page/page';
 
 export const Chat = () => {
-
-
-  return (
-    <div>
-      <Navbar />
-      This will be the chat page
-    </div>
-  );
+  return <Page>This will be the chat page</Page>;
 };

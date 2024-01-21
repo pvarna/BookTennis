@@ -24,23 +24,26 @@ userRouter.get(
 
 userRouter.post(
   '/login',
-  requestHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const user = await userService.login(email, password);
+  requestHandler(
+    async (req, res) => {
+      const { email, password } = req.body;
+      const user = await userService.login(email, password);
 
-    if (!user) {
-      throw new AuthenticationError();
-    }
+      if (!user) {
+        throw new AuthenticationError('Wrong credentials');
+      }
 
-    const token = generateToken({
-      id: user.id,
-      email: user.email,
-      fullName: user.fullName,
-      isAdmin: user.isAdmin,
-    });
+      const token = generateToken({
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        isAdmin: user.isAdmin,
+      });
 
-    res.status(200).send({ token });
-  })
+      res.status(200).send({ token });
+    },
+    [{ name: AuthenticationError, status: 401 }]
+  )
 );
 
 userRouter.post(

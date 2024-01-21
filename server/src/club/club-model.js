@@ -1,5 +1,6 @@
 import { Model } from 'objection';
-import { UserModel } from './user';
+import { UserModel } from '../user/user-model.js';
+import { CourtModel } from '../court/court-model.js';
 
 export class ClubModel extends Model {
   static tableName = 'clubs';
@@ -10,6 +11,7 @@ export class ClubModel extends Model {
   userId;
 
   owner;
+  courts;
 
   static relationMappings = {
     owner: {
@@ -20,5 +22,13 @@ export class ClubModel extends Model {
         to: 'users.id',
       },
     },
-  }
+    courts: {
+      relation: Model.HasManyRelation,
+      modelClass: CourtModel,
+      join: {
+        from: 'clubs.id',
+        to: 'courts.club_id',
+      },
+    },
+  };
 }

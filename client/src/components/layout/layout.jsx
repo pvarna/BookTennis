@@ -15,7 +15,6 @@ export const Layout = () => {
   const { pathname } = useLocation();
   const user = useCurrentUser();
 
-  console.log("aloo")
   if (
     !user &&
     (pathname.includes(chatPath) ||
