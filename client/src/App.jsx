@@ -1,50 +1,34 @@
 import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Login } from './routes/login/login';
 import { ToastContainer } from 'react-toastify';
 import { Register } from './routes/register/register';
 import { HomePage } from './routes/home-page/home-page';
 import { CurrentUserContextProvider } from './hooks/useCurrentUser';
 import {
+  chatPath,
+  clubsApprovalPath,
+  createClubsPath,
   clubPath,
   dashboardPath,
   homePath,
   loginPath,
   registerPath,
   root,
+  profilePath,
 } from './routes/constants';
 import { LandingPage } from './routes/landing-page/landing-page';
 import { Dashboard } from './routes/dashboard/dashboard';
 import { Club } from './routes/club/club';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-
-const router = createBrowserRouter([
-  {
-    path: root,
-    element: <LandingPage />,
-  },
-  {
-    path: loginPath,
-    element: <Login />,
-  },
-  {
-    path: registerPath,
-    element: <Register />,
-  },
-  {
-    path: dashboardPath,
-    element: <Dashboard />,
-  },
-  {
-    path: `${clubPath}/:clubId`,
-    element: <Club />,
-  },
-  {
-    path: homePath,
-    element: <HomePage />,
-  },
-]);
+import { Layout } from './components/layout/layout';
+import { ErrorPage } from './components/error-page/error-page';
+import { ErrorType } from './components/error-page/constants';
+import { ApproveClubs } from './routes/approve-clubs/approve-clubs';
+import { CreateClub } from './routes/create-club/create-club';
+import { Profile } from './routes/profile/profile';
+import { Chat } from './routes/chat/chat';
 
 function App() {
   return (
@@ -52,7 +36,26 @@ function App() {
       <CurrentUserContextProvider>
         <LocalizationProvider dateAdapter={AdapterLuxon}>
           <ToastContainer />
-          <RouterProvider router={router} />
+          <BrowserRouter>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route index path={root} element={<LandingPage />} />
+                <Route path={loginPath} element={<Login />} />
+                <Route path={registerPath} element={<Register />} />
+                <Route path={homePath} element={<HomePage />} />
+                <Route path={chatPath} element={<Chat />} />
+                <Route path={profilePath} element={<Profile />} />
+                <Route path={createClubsPath} element={<CreateClub />} />
+                <Route path={clubsApprovalPath} element={<ApproveClubs />} />
+                <Route path={dashboardPath} element={<Dashboard />} />
+                <Route path={`${clubPath}/:clubId`} element={<Club />} />
+              </Route>
+              <Route
+                path='*'
+                element={<ErrorPage type={ErrorType.PageNotFound} />}
+              />
+            </Routes>
+          </BrowserRouter>
         </LocalizationProvider>
       </CurrentUserContextProvider>
     </div>
