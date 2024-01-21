@@ -22,6 +22,10 @@ export const Club = () => {
     return <CircularProgress />;
   }
 
+  if (!data?.club) {
+    return <ErrorContainer error={"Invalid club id"}/>
+  }
+
   return (
     <Box>
       <Typography variant='h2'>{data?.club.name}</Typography>
@@ -30,7 +34,7 @@ export const Club = () => {
         value={date}
         onChange={(value) => setDate(value)}
       />
-      {!!data &&
+      {!!data?.club &&
         data.club.courts.map((court) => (
           <Flex
             key={court.id}
@@ -41,7 +45,11 @@ export const Club = () => {
               <Typography>{`Surface: ${court.surface}`}</Typography>
               <Typography>{`Price: ${court.price}`}</Typography>
             </Flex>
-            <TimeSlots courtId={court.id} reservations={court.reservations} date={date} />
+            <TimeSlots
+              courtId={court.id}
+              reservations={court.reservations}
+              date={date}
+            />
           </Flex>
         ))}
       {!!error?.message && <ErrorContainer error={error.message} />}

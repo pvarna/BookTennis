@@ -1,12 +1,21 @@
-import { Box, Button, CircularProgress, MenuItem, Select } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import { COURT_SURFACES, Cities } from '../../constants';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { ErrorContainer } from '../../components/error-container';
 import { clubService } from '../../services/club-service';
 import { ClubList } from './club-list/club-list';
+import { Flex } from '../../components/flex';
 
 export const Dashboard = () => {
+  const initialRenderRef = useRef(true)
   const [filters, setFilters] = useState({
     city: '',
     surfaces: [],
@@ -22,6 +31,7 @@ export const Dashboard = () => {
 
     const clubs = await clubService.loadClubs(filters.city, filters.surfaces);
     setClubs(clubs);
+    initialRenderRef.current = false
   });
 
   if (loading) {
@@ -31,35 +41,43 @@ export const Dashboard = () => {
   return (
     <Box component='form' onSubmit={handleSubmit}>
       <Box sx={{ display: 'flex', gap: '10px' }}>
-        <Select
-          id='city-select'
-          value={filters.city}
-          label='City'
-          onChange={(event) =>
-            setFilters({ ...filters, city: event.target.value })
-          }
-        >
-          {Cities.map((city) => (
-            <MenuItem key={city.value} value={city.value.toLowerCase()}>
-              {city.label}
-            </MenuItem>
-          ))}
-        </Select>
-        <Select
-          id='surface-select'
-          value={filters.surfaces}
-          label='Surface'
-          multiple
-          onChange={(event) =>
-            setFilters({ ...filters, surfaces: event.target.value })
-          }
-        >
-          {COURT_SURFACES.map((surface) => (
-            <MenuItem key={surface} value={surface}>
-              {surface}
-            </MenuItem>
-          ))}
-        </Select>
+        <Flex flexDirection='column' gap='2px'>
+          <InputLabel id='city-select-label'>City</InputLabel>
+          <Select
+            labelId='city-select-label'
+            id='city-select'
+            value={filters.city}
+            label='City'
+            onChange={(event) =>
+              setFilters({ ...filters, city: event.target.value })
+            }
+          >
+            {Cities.map((city) => (
+              <MenuItem key={city.value} value={city.value.toLowerCase()}>
+                {city.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </Flex>
+        <Flex flexDirection='column' gap='2px'>
+          <InputLabel id='surface-select-label'>Surface</InputLabel>
+          <Select
+            labelId='surface-select-label'
+            id='surface-select'
+            value={filters.surfaces}
+            label='Surface'
+            multiple
+            onChange={(event) =>
+              setFilters({ ...filters, surfaces: event.target.value })
+            }
+          >
+            {COURT_SURFACES.map((surface) => (
+              <MenuItem key={surface} value={surface}>
+                {surface}
+              </MenuItem>
+            ))}
+          </Select>
+        </Flex>
         <Button
           variant='contained'
           type='submit'
@@ -69,7 +87,7 @@ export const Dashboard = () => {
         </Button>
       </Box>
       {!!error?.message && <ErrorContainer error={error.message} />}
-      <ClubList clubs={clubs} />
+      <ClubList clubs={clubs} isInitial={initialRenderRef.current} />
     </Box>
   );
 };

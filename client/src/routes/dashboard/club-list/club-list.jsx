@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom'
 
-export const ClubList = ({ clubs }) => {
-  if (clubs.length === 0) {
+export const ClubList = ({ clubs, isInitial }) => {
+  if (clubs.length === 0 && !isInitial) {
     return <Typography variant='h3'> No available clubs</Typography>;
   }
 

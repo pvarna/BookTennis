@@ -1,5 +1,3 @@
-import { AuthenticationError } from './errors.js';
-
 export function requestHandler(handler, errors = []) {
   return async (request, response, next) => {
     try {

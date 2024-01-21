@@ -47,7 +47,7 @@ export class HttpService {
         },
       }
     );
-console.log(response)
+
     // TODO: Better error handling
     if (!response.ok) {
       const responseText = await response.text();

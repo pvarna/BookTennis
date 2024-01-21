@@ -7,7 +7,7 @@ class ClubService {
       .withGraphJoined('courts')
       .whereIn('surface', surfaces);
 
-    if (city !== undefined) {
+    if (city !== '') {
       query.where('city', city);
     }
 

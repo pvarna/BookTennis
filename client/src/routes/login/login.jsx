@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { userService } from '../../services/user-service';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import { homePath, registerPath } from "../constants";
+import { homePath, registerPath, root } from "../constants";
 import { Copyright } from "../../components/copyright/copyright";
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { ErrorContainer } from '../../components/error-container';
@@ -51,7 +51,7 @@ export const Login = () => {
   });
 
   if (user) {
-    return <Navigate to='/' />;
+    return <Navigate to={root} />;
   }
 
   if (loading) {

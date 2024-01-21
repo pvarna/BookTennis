@@ -15,13 +15,13 @@ import { reservationService } from '../../services/reservation-service';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { ErrorContainer } from '../../components/error-container';
 
-function areSameDate(date, otherDate) {
+const areSameDate = (date, otherDate) => {
   return (
     date.hasSame(otherDate, 'day') &&
     date.hasSame(otherDate, 'month') &&
     date.hasSame(otherDate, 'year')
   );
-}
+};
 
 // TODO: Add a migration and get start and end hour from the database
 export const TimeSlots = ({
@@ -43,7 +43,7 @@ export const TimeSlots = ({
   } = useAsyncAction(async () => {
     await reservationService.makeReservation({
       startingTime: date.startOf('day').plus({ hours: selectedSlot }),
-      userId: user.id,
+      userId: user?.id,
       courtId,
     });
 
@@ -68,7 +68,7 @@ export const TimeSlots = ({
   if (loading) {
     return <CircularProgress />;
   }
-
+console.log(!!error?.message)
   return (
     <Flex flexDirection='column'>
       {slots.map((slot) => (
@@ -98,7 +98,7 @@ export const TimeSlots = ({
           ${selectedSlot}:00 - ${selectedSlot + 1}:00`}
         </DialogTitle>
         <DialogContent>
-          {!!error?.message && <ErrorContainer message={error.message} />}
+          {!!error?.message && <ErrorContainer error={error.message} />}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleSubmit}>yes</Button>

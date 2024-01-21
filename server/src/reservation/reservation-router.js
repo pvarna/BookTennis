@@ -56,17 +56,15 @@ reservationRouter.get(
 reservationRouter.post(
   '/',
   authMiddleware,
-  requestHandler(async (req, res) => {
-    const { userId, courtId, startingTime } = req.body;
+  requestHandler(
+    async (req, res) => {
+      const { userId, courtId, startingTime } = req.body;
 
-    const reservation = await reservationService.makeReservation(
-      userId,
-      courtId,
-      startingTime
-    );
+      await reservationService.makeReservation(userId, courtId, startingTime);
 
-    res.status(200).send({});
-  })
+      res.status(200).send({});
+    },
+  )
 );
 
 reservationRouter.put(
