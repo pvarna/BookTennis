@@ -68,7 +68,6 @@ export const TimeSlots = ({
   if (loading) {
     return <CircularProgress />;
   }
-  console.log(!!error?.message);
   return (
     <Flex
       flexDirection="row"
