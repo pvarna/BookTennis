@@ -32,8 +32,8 @@ export const Login = () => {
     email: '',
     password: '',
   });
-  const user = useCurrentUser();
-
+  const user = useCurrentUser()
+  
   const {
     error,
     loading,

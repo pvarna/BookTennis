@@ -1,9 +1,11 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { homePath, loginPath, registerPath } from "../../routes/constants";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export const Hero = ({ content, title }) => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const user = useCurrentUser();
 
   return (
     <section className="text-center lg:w-full lg:py-20 lg:text-left">
@@ -17,36 +19,51 @@ export const Hero = ({ content, title }) => {
               <p className="prose prose-xl m-auto text-white">{content}</p>
             </div>
           </div>
-
-          </div>
         </div>
+      </div>
 
-        <div className="flex flex-row flex-wrap justify-center ">
-              <Button
-                variant="contained"
-                type="button"
-                onClick={() => navigate(loginPath)}
-                sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214", marginRight: "20px" }}
-              >
-                Login
-              </Button>
-              <Button
-                variant="contained"
-                type="button"
-                onClick={() => navigate(registerPath)}
-                sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214", marginRight: "20px"  }}
-              >
-                Register
-              </Button>
-              <Button
-                variant="contained"
-                type="button"
-                onClick={() => navigate(homePath)}
-                sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214" }}
-              >
-                Browse clubs
-              </Button>
-            </div>
+      <div className="flex flex-row flex-wrap justify-center ">
+        {!user && (
+          <>
+            {" "}
+            <Button
+              variant="contained"
+              type="button"
+              onClick={() => navigate(loginPath)}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: "#EE7214",
+                marginRight: "20px",
+              }}
+            >
+              Login
+            </Button>
+            <Button
+              variant="contained"
+              type="button"
+              onClick={() => navigate(registerPath)}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: "#EE7214",
+                marginRight: "20px",
+              }}
+            >
+              Register
+            </Button>
+          </>
+        )}
+
+        <Button
+          variant="contained"
+          type="button"
+          onClick={() => navigate(homePath)}
+          sx={{ mt: 3, mb: 2, backgroundColor: "#EE7214" }}
+        >
+          Browse clubs
+        </Button>
+      </div>
     </section>
   );
 };
