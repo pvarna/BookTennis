@@ -7,6 +7,7 @@ export const createClubSlug = 'create-club';
 export const chatSlug = 'chat';
 export const clubsApprovalSlug = 'clubs-approval';
 export const clubSlug = 'club';
+export const landingPageSlug = 'landing-page';
 
 export const homePath = `${root}${browseClubsSlug}`;
 export const loginPath = `${root}${loginSlug}`;
@@ -16,3 +17,4 @@ export const createClubsPath = `${root}${createClubSlug}`;
 export const chatPath = `${root}${chatSlug}`;
 export const clubsApprovalPath = `${root}${clubsApprovalSlug}`;
 export const clubPath = `${root}${clubSlug}`;
+export const landingPagePath = `${root}${landingPageSlug}`;

@@ -1,43 +1,19 @@
-import { NotFoundError } from 'objection';
-import { userService } from '../user/user-service.js';
-import { verifyToken } from '../utils/auth.js';
-import { AuthenticationError, InternalServerError } from '../utils/errors.js';
+import { AuthenticationError, InternalServerError, NotFoundError } from '../utils/errors.js';
 import { requestHandler } from '../utils/request-handler.js';
-import jwt from 'jsonwebtoken';
+import { authService } from '../utils/auth-service.js';
 
 export const authMiddleware = requestHandler(
   async (req, res, next) => {
     const { authorization } = req.headers;
-    if (!authorization) {
-      throw new AuthenticationError('Unauthorized');
-    }
 
-    const [tokenType, token] = authorization.split(' ');
+    const user = await authService.validateHeader(authorization);
 
-    if (tokenType !== 'Bearer') {
-      throw new AuthenticationError(
-        'Invalid token type - must be in the format `Bearer <value>'
-      );
-    }
-
-    try {
-      const { id } = verifyToken(token);
-
-      const user = await userService.findById(id);
-      if (!user) {
-        throw new NotFoundError('User not found');
-      }
-
-      res.locals.user = user;
-    } catch (error) {
-      if (error instanceof jwt.TokenExpiredError) {
-        throw new AuthenticationError('Token expired');
-      }
-
-      throw new InternalServerError('Something went wrong');
-    }
-
+    res.locals.user = user;
     next();
   },
-  [{ name: AuthenticationError, status: 401 }]
+  [
+    { name: AuthenticationError, status: 401 },
+    { name: NotFoundError, status: 404 },
+    { name: InternalServerError, status: 500 },
+  ]
 );

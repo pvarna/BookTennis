@@ -10,6 +10,7 @@ clubRouter.use('/:clubId/court', courtRouter);
 
 clubRouter.get(
   '/',
+  authMiddleware,
   requestHandler(async (req, res) => {
     const { city, surfaces: surfacesQuery } = req.query;
 
@@ -33,6 +34,7 @@ clubRouter.get(
 
 clubRouter.get(
   '/:clubId',
+  authMiddleware,
   requestHandler(async (req, res) => {
     const clubId = +req.params.clubId;
     const { date } = req.query
