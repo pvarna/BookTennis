@@ -2,8 +2,13 @@ import { requestHandler } from '../utils/request-handler.js';
 import { authMiddleware } from '../middlewares/auth-middleware.js';
 import { Router } from 'express';
 import { reservationService } from './reservation-service.js';
+import { io } from '../index.js';
 
 export const reservationRouter = new Router();
+
+export function onMakeReservation() {
+  io.emit('refetch-reservations');
+}
 
 reservationRouter.get(
   '/:reservationId',

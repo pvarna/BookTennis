@@ -6,6 +6,7 @@ import {
   chatSlug,
   createClubsPath,
   homePath,
+  landingPagePath,
   loginPath,
   profilePath,
   registerPath,
@@ -85,7 +86,7 @@ export const Navbar = () => {
       sx={{ backgroundColor: '#EE7214', fontFamily: 'Roboto' }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-around' }}>
-        <Link to='/'>
+        <Link to={landingPagePath}>
           <Typography variant='h6' component='div' sx={{ flexGrow: 0.5 }}>
             Book Tennis
           </Typography>

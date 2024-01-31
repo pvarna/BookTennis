@@ -15,18 +15,20 @@ import {
   registerPath,
   root,
   profilePath,
+  landingPagePath,
 } from './routes/constants';
 import { LandingPage } from './routes/landing-page/landing-page';
 import { Club } from './routes/club/club';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { Layout } from './components/layout/layout';
 import { ErrorPage } from './components/error-page/error-page';
 import { ErrorType } from './components/error-page/constants';
 import { ApproveClubs } from './routes/approve-clubs/approve-clubs';
 import { CreateClub } from './routes/create-club/create-club';
 import { Profile } from './routes/profile/profile';
 import { Chat } from './routes/chat/chat';
+import { PublicRoute } from './components/public-route/public-route';
+import { PrivateRoute } from './components/private-route/private-route';
 
 function App() {
   return (
@@ -36,9 +38,14 @@ function App() {
           <ToastContainer />
           <BrowserRouter>
             <Routes>
-              <Route element={<Layout />}>
-                <Route index path={root} element={<LandingPage />} />
+              <Route path={root} element={<PublicRoute />}>
+                <Route index element={<LandingPage />} />
                 <Route path={loginPath} element={<Login />} />
+                <Route path={registerPath} element={<Register />} />
+              </Route>
+
+              <Route path={root} element={<PrivateRoute />}>
+                <Route path={landingPagePath} element={<LandingPage />} />
                 <Route path={registerPath} element={<Register />} />
                 <Route path={homePath} element={<BrowseClubs />} />
                 <Route path={chatPath} element={<Chat />} />

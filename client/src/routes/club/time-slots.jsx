@@ -5,21 +5,21 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from "@mui/material";
-import { Flex } from "../../components/flex";
-import { range } from "../../utils/lib";
-import { useMemo, useState } from "react";
-import { DateTime } from "luxon";
-import { useAsyncAction } from "../../hooks/use-async-action";
-import { reservationService } from "../../services/reservation-service";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { ErrorContainer } from "../../components/error-container";
+} from '@mui/material';
+import { Flex } from '../../components/flex';
+import { range } from '../../utils/lib';
+import { useMemo, useState } from 'react';
+import { DateTime } from 'luxon';
+import { useAsyncAction } from '../../hooks/use-async-action';
+import { reservationService } from '../../services/reservation-service';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { ErrorContainer } from '../../components/error-container';
 
 const areSameDate = (date, otherDate) => {
   return (
-    date.hasSame(otherDate, "day") &&
-    date.hasSame(otherDate, "month") &&
-    date.hasSame(otherDate, "year")
+    date.hasSame(otherDate, 'day') &&
+    date.hasSame(otherDate, 'month') &&
+    date.hasSame(otherDate, 'year')
   );
 };
 
@@ -28,6 +28,7 @@ export const TimeSlots = ({
   courtId,
   reservations,
   date,
+  onReservationMade,
   clubStartHour = 9,
   clubEndHour = 22,
 }) => {
@@ -42,11 +43,12 @@ export const TimeSlots = ({
     loading,
   } = useAsyncAction(async () => {
     await reservationService.makeReservation({
-      startingTime: date.startOf("day").plus({ hours: selectedSlot }),
+      startingTime: date.startOf('day').plus({ hours: selectedSlot }),
       userId: user?.id,
       courtId,
     });
 
+    onReservationMade();
     setIsOpen(false);
     setSelectedSlot(undefined);
   });
@@ -70,8 +72,8 @@ export const TimeSlots = ({
   }
   return (
     <Flex
-      flexDirection="row"
-      sx={{ alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}
+      flexDirection='row'
+      sx={{ alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}
     >
       {slots.map((slot) => (
         <Button
@@ -82,14 +84,14 @@ export const TimeSlots = ({
             setIsOpen(true);
           }}
           sx={{
-            border: "1px solid black",
-            color: "black",
-            padding: "8px",
-            borderRadius: "8px",
-            backgroundColor: "#BED754",
-            "&.Mui-disabled": {
-              backgroundColor: "#750E21",
-              color: "white",
+            border: '1px solid black',
+            color: 'black',
+            padding: '8px',
+            borderRadius: '8px',
+            backgroundColor: '#BED754',
+            '&.Mui-disabled': {
+              backgroundColor: '#750E21',
+              color: 'white',
             },
           }}
         >{`${slot}:00 - ${slot + 1}:00`}</Button>
@@ -101,7 +103,7 @@ export const TimeSlots = ({
         </DialogTitle>
         <DialogContent>
           {!!error?.message && (
-            <ErrorContainer error={"You are not logged in."} />
+            <ErrorContainer error={'You are not logged in.'} />
           )}
         </DialogContent>
         <DialogActions>

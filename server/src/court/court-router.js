@@ -6,6 +6,7 @@ export const courtRouter = new Router();
 
 courtRouter.get(
   '/',
+  authMiddleware,
   requestHandler((req, res) => {
     const clubId = +req.params.clubId;
 
@@ -17,6 +18,7 @@ courtRouter.get(
 
 courtRouter.get(
   '/:courtId',
+  authMiddleware,
   requestHandler((req, res) => {
     const clubId = +req.params.clubId;
     const courtId = +req.params.courtId;
