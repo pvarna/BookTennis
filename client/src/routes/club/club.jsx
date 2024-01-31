@@ -93,7 +93,7 @@ export const Club = () => {
                 courtId={court.id}
                 reservations={court.reservations}
                 date={date}
-                onReservationMade={() => socket.emit('make-reservation')}
+                onReservationMade={() => socket.emit('modify-reservation')}
               />
             </Flex>
           ))}

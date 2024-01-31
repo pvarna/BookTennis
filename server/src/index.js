@@ -33,7 +33,7 @@ export const io = new Server(server, {
 io.use(socketAuthMiddleware);
 
 io.on('connection', (socket) => {
-  socket.on('make-reservation', onMakeReservation);
+  socket.on('modify-reservation', onMakeReservation);
 });
 
 app.use(json());

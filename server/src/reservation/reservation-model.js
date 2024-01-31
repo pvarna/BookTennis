@@ -17,7 +17,7 @@ export class ReservationsModel extends Model {
       relation: Model.BelongsToOneRelation,
       modelClass: UserModel,
       join: {
-        from: 'courts.user_id',
+        from: 'reservations.user_id',
         to: 'users.id',
       },
     },

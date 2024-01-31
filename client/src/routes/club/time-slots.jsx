@@ -1,11 +1,4 @@
-import {
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { Flex } from '../../components/flex';
 import { range } from '../../utils/lib';
 import { useMemo, useState } from 'react';
@@ -14,6 +7,7 @@ import { useAsyncAction } from '../../hooks/use-async-action';
 import { reservationService } from '../../services/reservation-service';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { ErrorContainer } from '../../components/error-container';
+import { Modal } from '../../components/modal/modal';
 
 const areSameDate = (date, otherDate) => {
   return (
@@ -70,6 +64,7 @@ export const TimeSlots = ({
   if (loading) {
     return <CircularProgress />;
   }
+
   return (
     <Flex
       flexDirection='row'
@@ -96,30 +91,20 @@ export const TimeSlots = ({
           }}
         >{`${slot}:00 - ${slot + 1}:00`}</Button>
       ))}
-      <Dialog open={isOpen}>
-        <DialogTitle>
-          {`Are you sure you want to reserve this court for 
+      <Modal
+        isOpen={isOpen}
+        title={`Are you sure you want to reserve this court for 
           ${selectedSlot}:00 - ${selectedSlot + 1}:00?`}
-        </DialogTitle>
-        <DialogContent>
-          {!!error?.message && (
-            <ErrorContainer error={'You are not logged in.'} />
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSubmit} disabled={!!error}>
-            yes
-          </Button>
-          <Button
-            onClick={() => {
-              setIsOpen(false);
-              setSelectedSlot(undefined);
-            }}
-          >
-            no
-          </Button>
-        </DialogActions>
-      </Dialog>
+        content={
+          !!error?.message && <ErrorContainer error={'Something went wrong'} />
+        }
+        onAccept={handleSubmit}
+        onCancel={() => {
+          setSelectedSlot(undefined);
+          setIsOpen(false);
+        }}
+        disableAccept={!!error}
+      />
     </Flex>
   );
 };
