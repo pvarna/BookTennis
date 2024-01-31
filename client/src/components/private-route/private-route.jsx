@@ -1,15 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { loginPath } from '../../routes/constants';
 
 export function PrivateRoute() {
   const user = useCurrentUser();
-  // const location = useLocation();
 
-  return user ? (
-    // <PageWrapper>
-      <Outlet />
-    // </PageWrapper>
-  ) : (
-    <Navigate to="/login"  />
-  );
+  return user ? <Outlet /> : <Navigate to={loginPath} />;
 }
