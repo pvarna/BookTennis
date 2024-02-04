@@ -8,6 +8,8 @@ import { reservationService } from '../../services/reservation-service';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { ErrorContainer } from '../../components/error-container';
 import { Modal } from '../../components/modal/modal';
+import { successToast } from '../../utils/customToast';
+import { alpha } from '@mui/material';
 
 const areSameDate = (date, otherDate) => {
   return (
@@ -16,6 +18,8 @@ const areSameDate = (date, otherDate) => {
     date.hasSame(otherDate, 'year')
   );
 };
+
+const isPast = (date, hour) => date.set({ hour: hour }) < DateTime.now();
 
 // TODO: Add a migration and get start and end hour from the database
 export const TimeSlots = ({
@@ -45,6 +49,7 @@ export const TimeSlots = ({
     onReservationMade();
     setIsOpen(false);
     setSelectedSlot(undefined);
+    successToast('Reservation made successfully!');
   });
 
   const reservedHours = useMemo(
@@ -72,7 +77,7 @@ export const TimeSlots = ({
     >
       {slots.map((slot) => (
         <Button
-          disabled={reservedHours.includes(slot)}
+          disabled={reservedHours.includes(slot) || isPast(date, slot)}
           key={slot}
           onClick={() => {
             setSelectedSlot(slot);
@@ -83,11 +88,10 @@ export const TimeSlots = ({
             color: 'black',
             padding: '8px',
             borderRadius: '8px',
-            backgroundColor: '#BED754',
-            '&.Mui-disabled': {
-              backgroundColor: '#750E21',
-              color: 'white',
-            },
+            backgroundColor: alpha(
+              reservedHours.includes(slot) ? '#750E21' : '#BED754',
+              isPast(date, slot) ? 0.5 : 1
+            ),
           }}
         >{`${slot}:00 - ${slot + 1}:00`}</Button>
       ))}
@@ -95,9 +99,7 @@ export const TimeSlots = ({
         isOpen={isOpen}
         title={`Are you sure you want to reserve this court for 
           ${selectedSlot}:00 - ${selectedSlot + 1}:00?`}
-        content={
-          !!error?.message && <ErrorContainer error={'Something went wrong'} />
-        }
+        content={!!error?.message && <ErrorContainer error={error.message} />}
         onAccept={handleSubmit}
         onCancel={() => {
           setSelectedSlot(undefined);

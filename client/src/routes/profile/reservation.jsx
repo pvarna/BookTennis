@@ -7,8 +7,10 @@ import { ErrorContainer } from '../../components/error-container';
 import { useState } from 'react';
 import { Modal } from '../../components/modal/modal';
 import { socket } from '../../services/socket';
+import { DateTime } from 'luxon';
+import { successToast } from '../../utils/customToast';
 
-export const Reservation = ({ reservation }) => {
+export const Reservation = ({ reservation, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -18,12 +20,16 @@ export const Reservation = ({ reservation }) => {
   } = useAsyncAction(async () => {
     await reservationService.deleteReservation(reservation.id);
     setIsOpen(false);
+    onDelete();
     socket.emit('modify-reservation');
+    successToast('Reservation cancelled!')
   });
 
   if (loading) {
     return <CircularProgress />;
   }
+
+  const canDelete = DateTime.fromISO(reservation.startTime) >= DateTime.now();
 
   return (
     <Flex
@@ -41,15 +47,17 @@ export const Reservation = ({ reservation }) => {
         startTime={reservation.startTime}
         duration={reservation.durationInMinutes}
       />
-      <Button variant='destructive' onClick={() => setIsOpen(true)}>
-        Delete
-      </Button>
+      {canDelete && (
+        <Button variant='destructive' onClick={() => setIsOpen(true)}>
+          Cancel
+        </Button>
+      )}
       <Modal
         isOpen={isOpen}
-        title={`Are you sure you want to delete this reservation`}
+        title={`Are you sure you want to cancel this reservation?`}
         content={
           !!error?.message && (
-            <ErrorContainer error={'Error deleting reservation'} />
+            <ErrorContainer error={'Error canceling reservation'} />
           )
         }
         onAccept={deleteReservation}
