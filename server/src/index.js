@@ -24,8 +24,8 @@ const app = express();
 const server = createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: config.client.baseUrl,
-    methods: ['GET'],
+    origin: ` http://${config.client.baseUrl}`,
+    methods: ['GET','POST' ],
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
 });
