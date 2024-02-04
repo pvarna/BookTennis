@@ -5,7 +5,7 @@ import { UserStorage } from '../utils/user-storage';
 const userStorage = new UserStorage();
 
 export const socket = io(config.serverBaseUrl, {
-  autoConnect: false,
+  autoConnect: true,
   extraHeaders: {
     'Content-Type': 'application/json',
     ...(userStorage.isLoggedIn

@@ -7,7 +7,7 @@ export const config = {
     port: process.env.SERVER_PORT ?? 1337,
   },
   client: {
-    baseUrl: process.env.CLIENT_BASE_URL ?? '127.0.0.1:3000',
+    baseUrl: process.env.CLIENT_BASE_URL ?? 'http://127.0.0.1:3000',
   },
   db: {
     host: process.env.DATABASE_HOST ?? '127.0.0.1',

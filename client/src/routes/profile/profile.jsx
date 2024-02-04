@@ -1,24 +1,46 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { Page } from '../../components/page/page';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { reservationService } from '../../services/reservation-service';
+import { ErrorContainer } from '../../components/error-container';
+import { Flex } from '../../components/flex';
+import { Reservation } from './reservation';
+import { useAsync } from '../../hooks/use-async';
+import { useState } from 'react';
 
 export const Profile = () => {
+  const { id } = useCurrentUser();
+  const [showReservations, setShowReservations] = useState(false);
+  const { data, loading, error, reload } = useAsync(
+    async () => reservationService.loadReservationsForUser(id),
+    [id]
+  );
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
   return (
     <Page>
-      <Grid item xs={12} component={Paper} elevation={3} square>
-        <Box
-          sx={{
-            my: 6,
-            mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+      <Flex flexDirection='column' sx={{ margin: '16px' }}>
+        <Button
+          variant='containerd'
+          sx={{ backgroundColor: '#EE7214', width: '200px' }}
+          onClick={() => setShowReservations(!showReservations)}
         >
-          <Typography component='h1' variant='h3' color='#EE7214'>
-            Your profile
-          </Typography>
-        </Box>
-      </Grid>
+          {showReservations ? 'Hide reservations' : 'Show reservations'}
+        </Button>
+        {!!error?.message && (
+          <ErrorContainer error={'Error loading reservations'} />
+        )}
+        {data && showReservations && (
+          <Flex flexDirection='column' sx={{ padding: '16px' }}>
+            {data.map((res) => (
+              <Reservation key={res.id} reservation={res} onDelete={reload}/>
+            ))}
+          </Flex>
+        )}
+      </Flex>
     </Page>
   );
 };

@@ -24,8 +24,8 @@ const app = express();
 const server = createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: ` http://${config.client.baseUrl}`,
-    methods: ['GET','POST' ],
+    origin: config.client.baseUrl,
+    methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
 });
@@ -33,7 +33,7 @@ export const io = new Server(server, {
 io.use(socketAuthMiddleware);
 
 io.on('connection', (socket) => {
-  socket.on('make-reservation', onMakeReservation);
+  socket.on('modify-reservation', onMakeReservation);
 });
 
 app.use(json());

@@ -9,7 +9,14 @@ class ReservationService {
     await this.httpService.post('/reservation', {
       body: reservationDetails,
     });
+  }
 
+  async loadReservationsForUser(userId) {
+    return await this.httpService.get(`/reservation/user/${userId}`);
+  }
+
+  async deleteReservation(reservationId) {
+    return await this.httpService.delete(`/reservation/${reservationId}`);
   }
 }
 
