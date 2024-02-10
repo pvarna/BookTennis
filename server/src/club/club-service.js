@@ -26,6 +26,14 @@ class ClubService {
         ])
       );
   }
+
+  async createClub(clubInfo, userId) {
+    return await ClubModel.query().insert({
+      userId,
+      name: clubInfo.name,
+      city: clubInfo.city,
+    });
+  }
 }
 
 export const clubService = new ClubService();

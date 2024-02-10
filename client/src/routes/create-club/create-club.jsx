@@ -1,6 +1,7 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.css';
 import { Page } from '../../components/page/page';
+import { CreateClubForm } from './create-club-form';
 
 export const CreateClub = () => {
   return (
@@ -20,6 +21,7 @@ export const CreateClub = () => {
           </Typography>
         </Box>
       </Grid>
+      <CreateClubForm />
     </Page>
   );
 };
