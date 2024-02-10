@@ -11,6 +11,14 @@ class UserService {
     return await UserModel.query().findById(id);
   }
 
+  async updateInfo(userInfo) {
+    const updateData = {
+      fullName: userInfo.fullName ? userInfo.fullName : undefined,
+      phone: userInfo.phone ? userInfo.phone : undefined,
+    };
+    return await UserModel.query().update({ ...updateData });
+  }
+
   async login(email, password) {
     const user = await UserModel.query().findOne({ email });
     const areIdentical = await compare(password, user.password);

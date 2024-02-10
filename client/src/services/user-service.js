@@ -9,6 +9,18 @@ class UserService {
     this.userStorage = new UserStorage();
   }
 
+  async loadUser(id) {
+    const { user } = await this.httpService.get(`/user/${id}`);
+
+    return user;
+  }
+
+  async updateUserInfo(id, userInfo) {
+    await this.httpService.put(`/user/${id}`, {
+      body: { userInfo },
+    });
+  }
+
   async login(userDetails) {
     const data = await this.httpService.post('/user/login', {
       body: { ...userDetails },

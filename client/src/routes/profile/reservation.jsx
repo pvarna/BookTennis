@@ -22,14 +22,16 @@ export const Reservation = ({ reservation, onDelete }) => {
     setIsOpen(false);
     onDelete();
     socket.emit('modify-reservation');
-    successToast('Reservation cancelled!')
+    successToast('Reservation cancelled!');
   });
 
   if (loading) {
     return <CircularProgress />;
   }
 
-  const canDelete = DateTime.fromISO(reservation.startTime) >= DateTime.now();
+  const canDelete =
+    DateTime.fromISO(reservation.startTime).diff(DateTime.now(), 'hours')
+      .hours > 2;
 
   return (
     <Flex

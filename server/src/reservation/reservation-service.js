@@ -38,7 +38,7 @@ class ReservationService {
     }
 
     const reservationStartTime = fromPSQLDate(reservation.startTime);
-    if (reservationStartTime.diff(DateTime.now(), 'hours').hours > 2) {
+    if (reservationStartTime.diff(DateTime.now(), 'hours').hours < 2) {
       throw new BadRequestError('Reservation is too soon');
     }
 

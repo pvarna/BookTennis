@@ -7,6 +7,7 @@ import { Flex } from '../../components/flex';
 import { Reservation } from './reservation';
 import { useAsync } from '../../hooks/use-async';
 import { useState } from 'react';
+import { UserDetails } from './user-details';
 
 export const Profile = () => {
   const { id } = useCurrentUser();
@@ -23,8 +24,9 @@ export const Profile = () => {
   return (
     <Page>
       <Flex flexDirection='column' sx={{ margin: '16px' }}>
+        <UserDetails userId={id} />
         <Button
-          variant='containerd'
+          variant='contained'
           sx={{ backgroundColor: '#EE7214', width: '200px' }}
           onClick={() => setShowReservations(!showReservations)}
         >
@@ -36,7 +38,7 @@ export const Profile = () => {
         {data && showReservations && (
           <Flex flexDirection='column' sx={{ padding: '16px' }}>
             {data.map((res) => (
-              <Reservation key={res.id} reservation={res} onDelete={reload}/>
+              <Reservation key={res.id} reservation={res} onDelete={reload} />
             ))}
           </Flex>
         )}
