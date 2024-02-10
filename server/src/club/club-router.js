@@ -12,22 +12,23 @@ clubRouter.get(
   '/',
   authMiddleware,
   requestHandler(async (req, res) => {
-    const { city, surfaces: surfacesQuery } = req.query;
+    const { city, surfaces: surfacesQuery, page, pageSize } = req.query;
 
     const surfaces =
       surfacesQuery === ''
         ? ['clay', 'hard', 'grass']
         : surfacesQuery.split(',');
 
-    const clubs = await clubService.load(city, surfaces);
+    const paginatedClubs = await clubService.load(city, surfaces, page, pageSize);
 
     res.status(200).send({
-      clubs: clubs.map((club) => ({
+      clubs: paginatedClubs.results.map((club) => ({
         id: club.id,
         name: club.name,
         city: club.city,
         userId: club.userId,
       })),
+      total: paginatedClubs.total
     });
   })
 );
@@ -37,7 +38,7 @@ clubRouter.get(
   authMiddleware,
   requestHandler(async (req, res) => {
     const clubId = +req.params.clubId;
-    const { date } = req.query
+    const { date } = req.query;
 
     const club = await clubService.loadClubWithCourts(clubId, date);
 

@@ -11,7 +11,9 @@ class ReservationService {
       throw new BadRequestError('Cannot make reservations for the past');
     }
 
-    const isFreeSlot = (await ReservationsModel.query().where('startTime', startTime)).length === 0
+    const isFreeSlot =
+      (await ReservationsModel.query().where('startTime', startTime)).length ===
+      0;
     if (!isFreeSlot) {
       throw new BadRequestError('Slot is already taken');
     }
@@ -24,9 +26,10 @@ class ReservationService {
     });
   }
 
-  async fetchReservationByUserId(userId) {
+  async fetchReservationByUserId(userId, page, pageSize) {
     return await ReservationsModel.query()
       .where('userId', userId)
+      .page(page, pageSize)
       .orderBy('startTime', 'desc');
   }
 

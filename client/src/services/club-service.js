@@ -6,12 +6,10 @@ class ClubService {
     this.httpService = new HttpService();
   }
 
-  async loadClubs(city, surfaces) {
-    const data = await this.httpService.get('/club', {
-      query: { city, surfaces },
+  async loadClubs(filters) {
+    return await this.httpService.get('/club', {
+      query: { ...filters },
     });
-
-    return data.clubs;
   }
 
   async loadCLubInfo(clubId, date = DateTime.now()) {

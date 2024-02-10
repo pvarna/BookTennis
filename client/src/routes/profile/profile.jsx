@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from '@mui/material';
+import { Button, CircularProgress, TablePagination } from '@mui/material';
 import { Page } from '../../components/page/page';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { reservationService } from '../../services/reservation-service';
@@ -12,15 +12,23 @@ import { UserDetails } from './user-details';
 export const Profile = () => {
   const { id } = useCurrentUser();
   const [showReservations, setShowReservations] = useState(false);
+  const [pagination, setPagination] = useState({
+    page: 0,
+    pageSize: 10,
+  });
   const { data, loading, error, reload } = useAsync(
-    async () => reservationService.loadReservationsForUser(id),
-    [id]
+    async () => reservationService.loadReservationsForUser(id, pagination),
+    [id, pagination]
   );
 
   if (loading) {
     return <CircularProgress />;
   }
 
+  if (!loading && !data?.reservations) {
+    return null;
+  }
+  console.log(pagination);
   return (
     <Page>
       <Flex flexDirection='column' sx={{ margin: '16px' }}>
@@ -35,12 +43,23 @@ export const Profile = () => {
         {!!error?.message && (
           <ErrorContainer error={'Error loading reservations'} />
         )}
-        {data && showReservations && (
-          <Flex flexDirection='column' sx={{ padding: '16px' }}>
-            {data.map((res) => (
-              <Reservation key={res.id} reservation={res} onDelete={reload} />
-            ))}
-          </Flex>
+        {showReservations && (
+          <>
+            <Flex flexDirection='column' sx={{ padding: '16px' }}>
+              {data.reservations.map((res) => (
+                <Reservation key={res.id} reservation={res} onDelete={reload} />
+              ))}
+            </Flex>
+            <TablePagination
+              count={data.total}
+              page={pagination.page}
+              onPageChange={(_, page) => setPagination({ ...pagination, page })}
+              rowsPerPage={pagination.pageSize}
+              onRowsPerPageChange={(e) =>
+                setPagination({ page: 0, pageSize: parseInt(e.target.value) })
+              }
+            />
+          </>
         )}
       </Flex>
     </Page>
