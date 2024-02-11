@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { ClubModel } from './club-model.js';
+import { AuthorizationError } from '../utils/errors.js';
 
 class ClubService {
   async load(city, surfaces, page, pageSize) {
@@ -40,6 +41,16 @@ class ClubService {
       name: clubInfo.name,
       city: clubInfo.city,
     });
+  }
+
+  async deleteClub(clubId, userId) {
+    const club = await ClubModel.query().findById(clubId);
+
+    if (club.userId !== userId) {
+      throw new AuthorizationError('Insufficient permissions');
+    }
+
+    return await ClubModel.query().deleteById(clubId);
   }
 }
 

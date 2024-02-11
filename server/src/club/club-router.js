@@ -114,11 +114,18 @@ clubRouter.put(
 clubRouter.delete(
   '/:clubId',
   authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
+  requestHandler(
+    async (req, res) => {
+      const clubId = +req.params.clubId;
+      const userId = res.locals.user.id;
 
-    res.send(
-      `Delete a tennis club with id ${clubId}: ${JSON.stringify(req.body)}`
-    );
-  })
+      await clubService.deleteClub(clubId, userId);
+
+      res.status(200).send({});
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
+  )
 );

@@ -44,6 +44,7 @@ export const MyClubs = () => {
               <TableCell />
               <TableCell align='center'>Name</TableCell>
               <TableCell align='center'>City</TableCell>
+              <TableCell align='center'>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

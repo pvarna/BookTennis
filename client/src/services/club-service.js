@@ -25,6 +25,10 @@ class ClubService {
       body: { clubInfo },
     });
   }
+
+  async deleteClub(id) {
+    return await this.httpService.delete(`/club/${id}`);
+  }
 }
 
 export const clubService = new ClubService();
