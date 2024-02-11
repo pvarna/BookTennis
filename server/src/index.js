@@ -14,6 +14,7 @@ import { chatRouter } from './chat/chat-router.js';
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import { socketAuthMiddleware } from './middlewares/socket-auth-middleware.js';
+import { messageRouter } from './message/message-router.js';
 
 const port = config.server.port;
 
@@ -41,6 +42,7 @@ app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/club', clubRouter);
+app.use('/message', messageRouter)
 app.use('/reservation', reservationRouter);
 app.use('/chat', chatRouter);
 

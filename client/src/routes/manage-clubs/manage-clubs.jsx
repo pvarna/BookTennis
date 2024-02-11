@@ -23,7 +23,7 @@ export const ManageClubs = () => {
           </Typography>
         </Box>
       </Grid>
-      <Flex flexDirection='column' gap='20px' sx={{padding: '20px'}}>
+      <Flex flexDirection='column' gap='20px' sx={{padding: '20px', width:"100%"}}>
         <CreateClubForm />
         <MyClubs />
       </Flex>

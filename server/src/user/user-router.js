@@ -6,11 +6,15 @@ import { AuthenticationError, AuthorizationError } from "../utils/errors.js";
 import { authService } from "../utils/auth-service.js";
 
 export const userRouter = new Router();
+
 userRouter.get(
   "/",
   authMiddleware,
   requestHandler(async (_, res) => {
-    res.send(`Fetch the information about all users`);
+
+   const allUsers = await userService.getAllUsers()
+
+   res.status(200).send(allUsers)
   })
 );
 

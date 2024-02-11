@@ -40,7 +40,7 @@ export const ReservationRow = ({ reservation, onDelete }) => {
       </TableCell>
       <TableCell align='center'>
         {canDelete ? (
-          <IconButton onClick={() => setIsOpen(true)}>
+          <IconButton onClick={() => setIsOpen(true)} color='error'>
             <DeleteOutlineIcon />
           </IconButton>
         ) : (
