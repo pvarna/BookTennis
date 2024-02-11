@@ -211,7 +211,7 @@ const ChatLayout = () => {
                     <TextField
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
-                      label={`Send a message to ${users.find((u) => u.id === selectedUser).fullName}`}
+                      label={ selectedUser && users ? `Send a message to ${users.find((u) => u.id === selectedUser).fullName}` : 'Type a message'}
                       variant="outlined"
                       fullWidth
                       style={{ marginRight: "10px" }}

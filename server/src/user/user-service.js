@@ -11,7 +11,6 @@ class UserService {
     return await UserModel.query().findById(id);
   }
 
-
   async updateInfo(userId, userInfo) {
     const updateData = {
       fullName: userInfo.fullName ? userInfo.fullName : undefined,
@@ -23,8 +22,7 @@ class UserService {
   }
 
   async getAllUsers() {
-    return await UserModel.query().select()
-
+    return await UserModel.query().select();
   }
 
   async login(email, password) {

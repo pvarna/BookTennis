@@ -86,7 +86,7 @@ userRouter.put(
         throw new AuthorizationError("Insufficient permission");
       }
 
-      await userService.updateInfo(id, req.body.userInfo);
+      await userService.updateInfo(userId,req.body.userInfo)
 
       res.status(201).send({});
     },
