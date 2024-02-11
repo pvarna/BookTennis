@@ -1,6 +1,6 @@
 import {
   chatPath,
-  createClubsPath,
+  manageClubsPath,
   profilePath,
   clubsApprovalPath,
 } from "../../routes/constants";
@@ -18,7 +18,7 @@ export const Layout = () => {
   if (
     !user &&
     (pathname.includes(chatPath) ||
-      pathname.includes(createClubsPath) ||
+      pathname.includes(manageClubsPath) ||
       pathname.includes(profilePath) ||
       pathname.includes(clubsApprovalPath))
   ) {

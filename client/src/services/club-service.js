@@ -16,6 +16,10 @@ class ClubService {
     return await this.httpService.get(`/club/${clubId}`, { query: { date } });
   }
 
+  async loadClubsForUser(userId) {
+    return await this.httpService.get(`/club/user/${userId}`);
+  }
+
   async createClub(clubInfo) {
     await this.httpService.post('/club', {
       body: { clubInfo },

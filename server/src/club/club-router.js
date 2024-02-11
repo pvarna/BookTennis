@@ -3,7 +3,7 @@ import { courtRouter } from '../court/court-router.js';
 import { authMiddleware } from '../middlewares/auth-middleware.js';
 import { requestHandler } from '../utils/request-handler.js';
 import { clubService } from './club-service.js';
-import { AuthenticationError } from '../utils/errors.js';
+import { AuthenticationError, AuthorizationError } from '../utils/errors.js';
 
 export const clubRouter = new Router();
 
@@ -55,6 +55,29 @@ clubRouter.get(
       res.status(200).send({ club });
     },
     [{ name: AuthenticationError, status: 401 }]
+  )
+);
+
+clubRouter.get(
+  '/user/:userId',
+  authMiddleware,
+  requestHandler(
+    async (req, res) => {
+      const id = +req.params.userId;
+      const userId = res.locals.user.id;
+
+      if (id !== userId) {
+        throw new AuthorizationError('Insufficient permissions');
+      }
+
+      const clubs = await clubService.loadClubsForUser(id);
+
+      res.status(200).send({ clubs });
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
   )
 );
 

@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   chatPath,
   chatSlug,
-  createClubsPath,
+  manageClubsPath,
   homePath,
   landingPagePath,
   loginPath,
@@ -39,13 +39,8 @@ const AuthenticatedUser = () => {
         </Button>
       )}
 
-      <Button
-        color='inherit'
-        onClick={() => {
-          navigate(createClubsPath);
-        }}
-      >
-        Create club
+      <Button color='inherit' onClick={() => navigate(manageClubsPath)}>
+        Manage clubs
       </Button>
       <Button
         color='inherit'

@@ -11,36 +11,16 @@ import { useState } from 'react';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { ErrorContainer } from '../../components/error-container';
 import { clubService } from '../../services/club-service';
-import { useNavigate } from 'react-router-dom';
 import { Flex } from '../../components/flex';
 import { Cities } from '../../constants';
+import { successToast } from '../../utils/customToast';
+import { Popup } from '../../components/popup/popup';
 
-export const CreateClubForm = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: null,
-    city: null,
-  });
-
-  const {
-    error,
-    loading,
-    trigger: handleSubmit,
-  } = useAsyncAction(async (event) => {
-    event.preventDefault();
-
-    await clubService.createClub(formData);
-    navigate('/profile');
-  });
-
-  if (loading) {
-    return <CircularProgress />;
-  }
-
+const ClubForm = ({ formData, setFormData, onSubmit, error, onCancel }) => {
   return (
     <Box
       component='form'
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       sx={{
         paddingTop: '20px',
         display: 'flex',
@@ -83,14 +63,73 @@ export const CreateClubForm = () => {
           ))}
         </Select>
       </Flex>
+      <Flex>
+        <Button
+          variant='contained'
+          type='submit'
+          sx={{ backgroundColor: '#EE7214', width: '200px' }}
+        >
+          Create Club
+        </Button>
+        <Button
+          variant='contained'
+          type='button'
+          onClick={onCancel}
+          sx={{ backgroundColor: '#EE7214', width: '200px' }}
+        >
+          Cancel
+        </Button>
+      </Flex>
+      {!!error?.message && <ErrorContainer error={'Error creating club'} />}
+    </Box>
+  );
+};
+
+export const CreateClubForm = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: null,
+    city: null,
+  });
+
+  const {
+    error,
+    loading,
+    trigger: createClub,
+  } = useAsyncAction(async (event) => {
+    event.preventDefault();
+
+    await clubService.createClub(formData);
+    setIsOpen(false);
+    successToast('Club created successfully!');
+  });
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  return (
+    <Box sx={{ padding: '10px' }}>
       <Button
         variant='contained'
-        type='submit'
         sx={{ backgroundColor: '#EE7214', width: '200px' }}
+        onClick={() => setIsOpen(true)}
       >
         Create Club
       </Button>
-      {!!error?.message && <ErrorContainer error={'Error creating club'} />}
+      <Popup
+        open={isOpen}
+        title={'Create a tennis club'}
+        content={
+          <ClubForm
+            formData={formData}
+            setFormData={setFormData}
+            onSubmit={createClub}
+            onCancel={() => setIsOpen(false)}
+            error={error}
+          />
+        }
+      />
     </Box>
   );
 };

@@ -27,6 +27,13 @@ class ClubService {
       );
   }
 
+  async loadClubsForUser(userId) {
+    return await ClubModel.query()
+      .where('userId', userId)
+      .withGraphJoined('courts')
+      .orderBy('name', 'asc');
+  }
+
   async createClub(clubInfo, userId) {
     return await ClubModel.query().insert({
       userId,
