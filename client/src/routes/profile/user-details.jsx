@@ -1,9 +1,15 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { Flex } from '../../components/flex';
 import { useAsync } from '../../hooks/use-async';
 import { userService } from '../../services/user-service';
 import { ErrorContainer } from '../../components/error-container';
 import { useState } from 'react';
+import EditIcon from '@mui/icons-material/Edit';
 import { EditForm } from './edit-form';
 
 export const UserDetails = ({ userId }) => {
@@ -25,7 +31,7 @@ export const UserDetails = ({ userId }) => {
 
   return (
     <Box>
-      <Flex flexDirection='column' sx={{ alignItems: 'flex-start' }}>
+      <Flex gap="20px" sx={{padding: '8px'}}>
         {isEditting ? (
           <EditForm
             user={user}
@@ -36,20 +42,16 @@ export const UserDetails = ({ userId }) => {
             onCancel={() => setIsEditting(false)}
           />
         ) : (
-          <>
+          <Flex flexDirection='column' sx={{ alignItems: 'flex-start' }}>
             <Typography>{`Full name: ${user.fullName}`}</Typography>
             <Typography>{`Email: ${user.email}`}</Typography>
             <Typography>{`Phone: ${user.phone}`}</Typography>
-          </>
+          </Flex>
         )}
         {!isEditting && (
-          <Button
-            sx={{ backgroundColor: '#EE7214', maxWidth: '200px' }}
-            variant='contained'
-            onClick={() => setIsEditting(true)}
-          >
-            Edit
-          </Button>
+          <IconButton onClick={() => setIsEditting(true)}>
+            <EditIcon />
+          </IconButton>
         )}
       </Flex>
       {!!error?.message && <ErrorContainer error={'Error loading user info'} />}

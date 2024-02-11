@@ -37,8 +37,8 @@ export const MyClubs = () => {
       {data.clubs.length === 0 && (
         <Typography>You don't have any clubs yet</Typography>
       )}
-      <TableContainer sx={{ th: { width: '200px' } }} component={Paper}>
-        <Table aria-label='collapsible table'>
+      <TableContainer sx={{ th: { width: 200 } }} component={Paper}>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell />
