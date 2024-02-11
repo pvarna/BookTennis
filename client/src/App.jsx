@@ -8,7 +8,7 @@ import { CurrentUserContextProvider } from './hooks/useCurrentUser';
 import {
   chatPath,
   clubsApprovalPath,
-  createClubsPath,
+  manageClubsPath,
   clubPath,
   homePath,
   loginPath,
@@ -24,7 +24,7 @@ import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { ErrorPage } from './components/error-page/error-page';
 import { ErrorType } from './components/error-page/constants';
 import { ApproveClubs } from './routes/approve-clubs/approve-clubs';
-import { CreateClub } from './routes/create-club/create-club';
+import { ManageClubs } from './routes/manage-clubs/manage-clubs';
 import { Profile } from './routes/profile/profile';
 import { Chat } from './routes/chat/chat';
 import { PublicRoute } from './components/public-route/public-route';
@@ -50,7 +50,10 @@ function App() {
                 <Route path={homePath} element={<BrowseClubs />} />
                 <Route path={chatPath} element={<Chat />} />
                 <Route path={profilePath} element={<Profile />} />
-                <Route path={createClubsPath} element={<CreateClub />} />
+                <Route path={manageClubsPath}>
+                  <Route index element={<ManageClubs />} />
+                  <Route path={`${manageClubsPath}/:id`} element={<></>} />
+                </Route>
                 <Route path={clubsApprovalPath} element={<ApproveClubs />} />
                 <Route path={`${clubPath}/:clubId`} element={<Club />} />
               </Route>

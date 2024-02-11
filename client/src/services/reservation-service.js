@@ -11,8 +11,10 @@ class ReservationService {
     });
   }
 
-  async loadReservationsForUser(userId) {
-    return await this.httpService.get(`/reservation/user/${userId}`);
+  async loadReservationsForUser(userId, pagination) {
+    return await this.httpService.get(`/reservation/user/${userId}`, {
+      query: { ...pagination },
+    });
   }
 
   async deleteReservation(reservationId) {

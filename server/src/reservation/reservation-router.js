@@ -34,16 +34,19 @@ reservationRouter.get(
     async (req, res) => {
       const userId = +req.params.userId;
       const id = res.locals.user.id;
+      const { page, pageSize } = req.query;
 
       if (id !== userId) {
         throw new AuthorizationError('Insufficient permissions');
       }
 
-      const reservations = await reservationService.fetchReservationByUserId(
-        userId
-      );
+      const paginatedReservations =
+        await reservationService.fetchReservationByUserId(userId, page, pageSize);
 
-      res.status(200).send(reservations);
+      res.status(200).send({
+        reservations: paginatedReservations.results,
+        total: paginatedReservations.total,
+      });
     },
     [
       { name: AuthenticationError, status: 401 },

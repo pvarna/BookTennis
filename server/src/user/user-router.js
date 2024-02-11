@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { requestHandler } from '../utils/request-handler.js';
 import { authMiddleware } from '../middlewares/auth-middleware.js';
 import { userService } from './user-service.js';
-import { AuthenticationError } from '../utils/errors.js';
+import { AuthenticationError, AuthorizationError } from '../utils/errors.js';
 import { authService } from '../utils/auth-service.js';
 
 export const userRouter = new Router();
@@ -17,11 +17,24 @@ userRouter.get(
 userRouter.get(
   '/:userId',
   authMiddleware,
-  requestHandler(async (req, res) => {
-    const userId = +req.params.userId;
+  requestHandler(
+    async (req, res) => {
+      const id = +req.params.userId;
+      const userId = res.locals.user.id;
 
-    res.send(`Fetch the information about a user with id ${userId}`);
-  })
+      if (id !== userId) {
+        throw new AuthorizationError('Insufficient permission');
+      }
+
+      const user = await userService.findById(id);
+
+      res.status(200).send({ user });
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
+  )
 );
 
 userRouter.post(
@@ -60,23 +73,22 @@ userRouter.post(
 userRouter.put(
   '/:userId',
   authMiddleware,
-  requestHandler(async (req, res) => {
-    const userId = +req.params.userId;
+  requestHandler(
+    async (req, res) => {
+      const id = +req.params.userId;
+      const userId = res.locals.user.id;
 
-    res.send(
-      `Update the information about an user with id ${userId}: ${JSON.stringify(
-        req.body
-      )}`
-    );
-  })
-);
+      if (id !== userId) {
+        throw new AuthorizationError('Insufficient permission');
+      }
 
-userRouter.delete(
-  '/:userId',
-  authMiddleware,
-  requestHandler(async (req, res) => {
-    const userId = +req.params.userId;
+      await userService.updateInfo(req.body.userInfo)
 
-    res.send(`Delete an user with id ${userId}: ${JSON.stringify(req.body)}`);
-  })
+      res.status(201).send({});
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
+  )
 );

@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middlewares/auth-middleware.js';
 import { requestHandler } from '../utils/request-handler.js';
+import { courtService } from './court-service.js';
+import { AuthenticationError, AuthorizationError } from '../utils/errors.js';
 
-export const courtRouter = new Router();
+export const courtRouter = new Router({ mergeParams: true });
 
 courtRouter.get(
   '/',
@@ -32,43 +34,60 @@ courtRouter.get(
 courtRouter.post(
   '/',
   authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
+  requestHandler(
+    async (req, res) => {
+      const { courtDetails } = req.body;
+      const clubId = +req.params.clubId;
+      const userId = res.locals.user.id;
 
-    res.send(
-      `Create a new court in a tennis club with id ${clubId}: ${JSON.stringify(
-        req.body
-      )}`
-    );
-  })
+      await courtService.addCourt(courtDetails, userId, clubId);
+
+      res.status(201).send({});
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
+  )
 );
 
 courtRouter.put(
   '/:courtId',
   authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
-    const courtId = +req.params.courtId;
+  requestHandler(
+    async (req, res) => {
+      const clubId = +req.params.clubId;
+      const courtId = +req.params.courtId;
+      const userId = res.locals.user.id;
+      const { courtDetails } = req.body;
 
-    res.send(
-      `Update the information about a court with id ${courtId} in a tennis club with id ${clubId}: ${JSON.stringify(
-        req.body
-      )}`
-    );
-  })
+      await courtService.updateCourt(courtDetails, userId, clubId, courtId);
+
+      res.status(201).send({});
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
+  )
 );
 
 courtRouter.delete(
   '/:courtId',
   authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
-    const courtId = +req.params.courtId;
+  requestHandler(
+    async (req, res) => {
+      const clubId = +req.params.clubId;
+      const courtId = +req.params.courtId;
+      const userId = res.locals.user.id;
 
-    res.send(
-      `Delete a court with id ${courtId} in a tennis club with id ${clubId}: ${JSON.stringify(
-        req.body
-      )}`
-    );
-  })
+      await courtService.deleteCourt(courtId, userId, clubId);
+
+      res.status(200).send({});
+    },
+    [
+      { name: AuthenticationError, status: 401 },
+      { name: AuthorizationError, status: 403 },
+    ]
+  )
 );
