@@ -52,12 +52,14 @@ export class HttpService {
     if (!response.ok) {
       const responseText = await response.text();
       const error = this.safeParse(responseText);
-
+      
       switch (error.name) {
         case 'AuthenticationError':
           this.userStorage.delete();
           EventBus.emit(EVENTS.logout);
           throw new Error('Authentication Error');
+          case 'BadRequestError':
+        throw new Error('Bad request')
         default:
           throw new Error('Something went wrong');
       }

@@ -1,21 +1,21 @@
-import { Button, CircularProgress } from '@mui/material';
-import { Flex } from '../../components/flex';
-import { range } from '../../utils/lib';
-import { useMemo, useState } from 'react';
-import { DateTime } from 'luxon';
-import { useAsyncAction } from '../../hooks/use-async-action';
-import { reservationService } from '../../services/reservation-service';
-import { useCurrentUser } from '../../hooks/useCurrentUser';
-import { ErrorContainer } from '../../components/error-container';
-import { Modal } from '../../components/modal/modal';
-import { successToast } from '../../utils/customToast';
-import { alpha } from '@mui/material';
+import { Button, CircularProgress } from "@mui/material";
+import { Flex } from "../../components/flex";
+import { range } from "../../utils/lib";
+import { useMemo, useState } from "react";
+import { DateTime } from "luxon";
+import { useAsyncAction } from "../../hooks/use-async-action";
+import { reservationService } from "../../services/reservation-service";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { ErrorContainer } from "../../components/error-container";
+import { Modal } from "../../components/modal/modal";
+import { successToast } from "../../utils/customToast";
+import { alpha } from "@mui/material";
 
 const areSameDate = (date, otherDate) => {
   return (
-    date.hasSame(otherDate, 'day') &&
-    date.hasSame(otherDate, 'month') &&
-    date.hasSame(otherDate, 'year')
+    date.hasSame(otherDate, "day") &&
+    date.hasSame(otherDate, "month") &&
+    date.hasSame(otherDate, "year")
   );
 };
 
@@ -89,7 +89,7 @@ export const TimeSlots = ({
             padding: '8px',
             borderRadius: '8px',
             backgroundColor: alpha(
-              reservedHours.includes(slot) ? '#750E21' : '#BED754',
+              reservedHours.includes(slot) ? "#ff9999" : "#BED754",
               isPast(date, slot) ? 0.5 : 1
             ),
           }}
