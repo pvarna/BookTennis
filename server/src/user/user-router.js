@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import { requestHandler } from '../utils/request-handler.js';
-import { authMiddleware } from '../middlewares/auth-middleware.js';
-import { userService } from './user-service.js';
-import { AuthenticationError, AuthorizationError } from '../utils/errors.js';
-import { authService } from '../utils/auth-service.js';
+import { Router } from "express";
+import { requestHandler } from "../utils/request-handler.js";
+import { authMiddleware } from "../middlewares/auth-middleware.js";
+import { userService } from "./user-service.js";
+import { AuthenticationError, AuthorizationError } from "../utils/errors.js";
+import { authService } from "../utils/auth-service.js";
 
 export const userRouter = new Router();
 userRouter.get(
-  '/',
+  "/",
   authMiddleware,
   requestHandler(async (_, res) => {
     res.send(`Fetch the information about all users`);
@@ -15,7 +15,7 @@ userRouter.get(
 );
 
 userRouter.get(
-  '/:userId',
+  "/:userId",
   authMiddleware,
   requestHandler(
     async (req, res) => {
@@ -23,7 +23,7 @@ userRouter.get(
       const userId = res.locals.user.id;
 
       if (id !== userId) {
-        throw new AuthorizationError('Insufficient permission');
+        throw new AuthorizationError("Insufficient permission");
       }
 
       const user = await userService.findById(id);
@@ -38,14 +38,14 @@ userRouter.get(
 );
 
 userRouter.post(
-  '/login',
+  "/login",
   requestHandler(
     async (req, res) => {
       const { email, password } = req.body;
       const user = await userService.login(email, password);
 
       if (!user) {
-        throw new AuthenticationError('Wrong credentials');
+        throw new AuthenticationError("Wrong credentials");
       }
 
       const token = authService.generateToken({
@@ -62,7 +62,7 @@ userRouter.post(
 );
 
 userRouter.post(
-  '/register',
+  "/register",
   requestHandler(async (req, res) => {
     const user = await userService.register(req.body);
 
@@ -71,7 +71,7 @@ userRouter.post(
 );
 
 userRouter.put(
-  '/:userId',
+  "/:userId",
   authMiddleware,
   requestHandler(
     async (req, res) => {
@@ -79,10 +79,10 @@ userRouter.put(
       const userId = res.locals.user.id;
 
       if (id !== userId) {
-        throw new AuthorizationError('Insufficient permission');
+        throw new AuthorizationError("Insufficient permission");
       }
 
-      await userService.updateInfo(req.body.userInfo)
+      await userService.updateInfo(id, req.body.userInfo);
 
       res.status(201).send({});
     },

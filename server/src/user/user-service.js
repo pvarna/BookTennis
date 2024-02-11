@@ -1,6 +1,6 @@
-import { UniqueViolationError } from 'objection';
-import { UserModel } from './user-model.js';
-import { hash, compare } from 'bcrypt';
+import { UniqueViolationError } from "objection";
+import { UserModel } from "./user-model.js";
+import { hash, compare } from "bcrypt";
 
 const SALT_ROUNDS = 10;
 
@@ -11,12 +11,14 @@ class UserService {
     return await UserModel.query().findById(id);
   }
 
-  async updateInfo(userInfo) {
+  async updateInfo(userId, userInfo) {
     const updateData = {
       fullName: userInfo.fullName ? userInfo.fullName : undefined,
       phone: userInfo.phone ? userInfo.phone : undefined,
     };
-    return await UserModel.query().update({ ...updateData });
+    return await UserModel.query()
+      .update({ ...updateData })
+      .where("id", userId);
   }
 
   async login(email, password) {
@@ -35,10 +37,10 @@ class UserService {
           password: hashedPassword,
           isAdmin: false,
         })
-        .returning('*');
+        .returning("*");
     } catch (error) {
       if (error instanceof UniqueViolationError) {
-        throw new UserAlreadyRegisteredError('User is already registered');
+        throw new UserAlreadyRegisteredError("User is already registered");
       }
       throw error;
     }
