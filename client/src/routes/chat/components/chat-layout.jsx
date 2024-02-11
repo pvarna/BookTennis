@@ -60,9 +60,6 @@ const ChatLayout = () => {
   const handleSendMessage = async () => {
     if (newMessage.trim() === "") return;
 
-    const currentDate = DateTime.now();
-    console.log("current date ", currentDate);
-
     const sentMessage = await messageService.sendMessageBetweenUsers(
       user.id,
       selectedUser,
@@ -128,7 +125,7 @@ const ChatLayout = () => {
                           u.id === selectedUser ? "#f0f0f0" : "inherit",
                       }}
                     >
-                      {u.email}
+                      {u.fullName}
                     </ListItem>
                   ))}
                 </List>
@@ -214,7 +211,7 @@ const ChatLayout = () => {
                     <TextField
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
-                      label="Type a message"
+                      label={`Send a message to ${users.find((u) => u.id === selectedUser).fullName}`}
                       variant="outlined"
                       fullWidth
                       style={{ marginRight: "10px" }}
