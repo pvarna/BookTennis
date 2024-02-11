@@ -1,4 +1,3 @@
-// ChatLayout.jsx
 import React, { useState, useRef, useEffect } from "react";
 import {
   Grid,
@@ -52,11 +51,17 @@ const ChatLayout = () => {
       userId
     );
 
-    setMessages(allMessages);
+    const sortedMessages = allMessages.sort(
+      (mes1, mes2) => new Date(mes1.time) - new Date(mes2.time)
+    );
+    setMessages(sortedMessages);
   };
 
   const handleSendMessage = async () => {
     if (newMessage.trim() === "") return;
+
+    const currentDate = DateTime.now();
+    console.log("current date ", currentDate);
 
     const sentMessage = await messageService.sendMessageBetweenUsers(
       user.id,
