@@ -81,36 +81,6 @@ clubRouter.get(
   )
 );
 
-clubRouter.post(
-  '/',
-  authMiddleware,
-  requestHandler(
-    async (req, res) => {
-      const { clubInfo } = req.body;
-      const userId = res.locals.user.id;
-
-      await clubService.createClub(clubInfo, userId);
-
-      res.status(201).send({});
-    },
-    [{ name: AuthenticationError, status: 401 }]
-  )
-);
-
-clubRouter.put(
-  '/:clubId',
-  authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
-
-    res.send(
-      `Update the information about a tennis club with id ${clubId}: ${JSON.stringify(
-        req.body
-      )}`
-    );
-  })
-);
-
 clubRouter.delete(
   '/:clubId',
   authMiddleware,

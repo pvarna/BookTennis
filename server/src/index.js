@@ -14,6 +14,7 @@ import { chatRouter } from './chat/chat-router.js';
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import { socketAuthMiddleware } from './middlewares/socket-auth-middleware.js';
+import { clubCreationRequestRouter } from './club-creation-request/club-creation-request-router.js';
 
 const port = config.server.port;
 
@@ -43,6 +44,7 @@ app.use('/user', userRouter);
 app.use('/club', clubRouter);
 app.use('/reservation', reservationRouter);
 app.use('/chat', chatRouter);
+app.use('/clubCreationRequest', clubCreationRequestRouter);
 
 server.listen(port, () => console.log(`Server is listening on port ${port}`));
 

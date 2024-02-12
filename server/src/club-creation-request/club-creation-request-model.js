@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { UserModel } from './user';
+import { UserModel } from '../user/user-model.js';
 
 export class ClubCreationRequestModel extends Model {
   static tableName = 'club_creation_requests';
@@ -8,6 +8,7 @@ export class ClubCreationRequestModel extends Model {
   userId;
   name;
   city;
+  status;
 
   createdBy;
 
@@ -20,5 +21,5 @@ export class ClubCreationRequestModel extends Model {
         to: 'users.id',
       },
     },
-  }
+  };
 }

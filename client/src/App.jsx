@@ -7,7 +7,7 @@ import { BrowseClubs } from './routes/browse-clubs/browse-clubs';
 import { CurrentUserContextProvider } from './hooks/useCurrentUser';
 import {
   chatPath,
-  clubsApprovalPath,
+  adminPath,
   manageClubsPath,
   clubPath,
   homePath,
@@ -23,7 +23,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { ErrorPage } from './components/error-page/error-page';
 import { ErrorType } from './components/error-page/constants';
-import { ApproveClubs } from './routes/approve-clubs/approve-clubs';
+import { Admin } from './routes/admin/admin';
 import { ManageClubs } from './routes/manage-clubs/manage-clubs';
 import { Profile } from './routes/profile/profile';
 import { Chat } from './routes/chat/chat';
@@ -46,7 +46,6 @@ function App() {
 
               <Route path={root} element={<PrivateRoute />}>
                 <Route path={landingPagePath} element={<LandingPage />} />
-                <Route path={registerPath} element={<Register />} />
                 <Route path={homePath} element={<BrowseClubs />} />
                 <Route path={chatPath} element={<Chat />} />
                 <Route path={profilePath} element={<Profile />} />
@@ -54,7 +53,7 @@ function App() {
                   <Route index element={<ManageClubs />} />
                   <Route path={`${manageClubsPath}/:id`} element={<></>} />
                 </Route>
-                <Route path={clubsApprovalPath} element={<ApproveClubs />} />
+                <Route path={adminPath} element={<Admin />} />
                 <Route path={`${clubPath}/:clubId`} element={<Club />} />
               </Route>
               <Route

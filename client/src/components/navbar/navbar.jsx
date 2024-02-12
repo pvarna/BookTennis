@@ -10,6 +10,7 @@ import {
   loginPath,
   profilePath,
   registerPath,
+  adminPath,
 } from '../../routes/constants';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { userService } from '../../services/user-service';
@@ -42,6 +43,11 @@ const AuthenticatedUser = () => {
       <Button color='inherit' onClick={() => navigate(manageClubsPath)}>
         Manage clubs
       </Button>
+      {user.isAdmin && (
+        <Button color='inherit' onClick={() => navigate(adminPath)}>
+          Admin
+        </Button>
+      )}
       <Button
         color='inherit'
         onClick={() => {

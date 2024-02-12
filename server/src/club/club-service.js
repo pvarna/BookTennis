@@ -35,8 +35,8 @@ class ClubService {
       .orderBy('name', 'asc');
   }
 
-  async createClub(clubInfo, userId) {
-    return await ClubModel.query().insert({
+  async createClub(clubInfo, userId, transaction) {
+    return await ClubModel.query(transaction).insert({
       userId,
       name: clubInfo.name,
       city: clubInfo.city,

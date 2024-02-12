@@ -1,20 +1,11 @@
-import {
-  Box,
-  CircularProgress,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useCurrentUser } from '../../../hooks/useCurrentUser';
 import { useAsync } from '../../../hooks/use-async';
 import { clubService } from '../../../services/club-service';
 import { ErrorContainer } from '../../../components/error-container';
 import { ClubDetailsRow } from './club-row/club-details-row';
+import { BasicTable } from '../../../components/basic-table/basic-table';
+import { EmptyTable } from '../../../components/empty-table/empty-table';
 
 export const MyClubs = () => {
   const { id } = useCurrentUser();
@@ -34,26 +25,18 @@ export const MyClubs = () => {
   return (
     <Box>
       <Typography variant='h4'>My Clubs</Typography>
-      {data.clubs.length === 0 && (
-        <Typography>You don't have any clubs yet</Typography>
+      {data.clubs.length === 0 ? (
+        <EmptyTable
+          title="You don't have any clubs yet"
+          content='Try to create a request for a club'
+        />
+      ) : (
+        <BasicTable headers={['', 'Name', 'City', 'Actions']}>
+          {data.clubs.map((club) => (
+            <ClubDetailsRow key={club.id} club={club} onAction={reload} />
+          ))}
+        </BasicTable>
       )}
-      <TableContainer sx={{ th: { width: 200 } }} component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell align='center'>Name</TableCell>
-              <TableCell align='center'>City</TableCell>
-              <TableCell align='center'>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.clubs.map((club) => (
-              <ClubDetailsRow key={club.id} club={club} onAction={reload} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
       {!!error?.message && <ErrorContainer error={'Error loading club'} />}
     </Box>
   );
