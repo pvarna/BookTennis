@@ -129,7 +129,7 @@ export const Profile = () => {
           )}
         </Flex>
         <Flex flexDirection='column' sx={{ alignItems: 'flex-start' }}>
-          <Typography variant='h4'>Reservations</Typography>
+          <Typography variant='h4'>My reservations</Typography>
           <ReservationsTable
             data={data}
             loading={loading}

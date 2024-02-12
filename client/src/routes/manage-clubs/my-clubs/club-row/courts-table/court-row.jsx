@@ -31,7 +31,7 @@ const UpdateCourt = ({ court, onAction }) => {
   }
   return (
     <>
-      <IconButton onClick={() => setIsOpen(true)}>
+      <IconButton onClick={() => setIsOpen(true)} color="primary">
         <EditIcon />
       </IconButton>
       <Popup
@@ -68,7 +68,7 @@ const DeleteCourt = ({ court, onAction }) => {
 
   return (
     <>
-      <IconButton onClick={() => setIsOpen(true)}>
+      <IconButton onClick={() => setIsOpen(true)} color="error">
         <DeleteOutlineIcon />
       </IconButton>
       <Modal

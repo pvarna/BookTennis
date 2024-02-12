@@ -32,7 +32,7 @@ const DeleteClubCell = ({ clubId, onAction }) => {
 
   return (
     <TableCell align='center'>
-      <IconButton onClick={() => setIsOpen(true)}>
+      <IconButton onClick={() => setIsOpen(true)} color="error">
         <DeleteOutlineIcon />
       </IconButton>
       <Modal
@@ -64,7 +64,7 @@ export const ClubDetailsRow = ({ club, onAction }) => {
           {club.name}
         </TableCell>
         <TableCell align='center'>{club.city}</TableCell>
-        <DeleteClubCell clubId={club.id} onAction={onAction} />
+        <DeleteClubCell clubId={club.id} onAction={onAction}/>
       </TableRow>
       <TableRow>
         <CourtsTable
