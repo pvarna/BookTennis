@@ -10,7 +10,6 @@ import {
   onMakeReservation,
   reservationRouter,
 } from './reservation/reservation-router.js';
-import { chatRouter } from './chat/chat-router.js';
 import { clubCreationRequestRouter } from './club-creation-request/club-creation-request-router.js';
 import { chatRouter } from "./chat/chat-router.js";
 import { Server } from "socket.io";
