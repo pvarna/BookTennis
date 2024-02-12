@@ -8,11 +8,12 @@ import {
   AuthorizationError,
   BadRequestError,
 } from '../utils/errors.js';
+import { SocketEmittedEvents } from '../types.js';
 
 export const reservationRouter = new Router();
 
 export function onMakeReservation() {
-  io.emit('refetch-reservations');
+  io.emit(SocketEmittedEvents.REFETCH_RESERVATIONS);
 }
 
 reservationRouter.get(

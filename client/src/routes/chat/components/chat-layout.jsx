@@ -20,6 +20,10 @@ import SendIcon from "@mui/icons-material/Send";
 import { messageService } from "../../../services/message-service";
 import { DateTime } from "luxon";
 import { ErrorContainer } from "../../../components/error-container";
+import { socket } from "../../../services/socket";
+import { useSocket } from "../../../hooks/use-socket";
+import { useAsync } from "../../../hooks/use-async";
+import { SocketEmittedEvents, SocketEvent } from "../../../types";
 
 const ChatLayout = () => {
   const user = useCurrentUser();
@@ -43,9 +47,26 @@ const ChatLayout = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [messages, setMessages] = useState([]);
 
+  const { reload } = useAsync(async () => {
+    if (selectedUser !== null) {
+      const allMessages = await messageService.loadMessagesBetweenUsers(
+        user.id,
+        selectedUser
+      );
+
+      const sortedMessages = allMessages.sort(
+        (mes1, mes2) => new Date(mes1.time) - new Date(mes2.time)
+      );
+      setMessages(sortedMessages);
+    }
+  }, [user, selectedUser]);
+
+  useSocket(SocketEmittedEvents.REFETCH_MESSAGES, () => reload());
+  useSocket(SocketEmittedEvents.RECEIVE_MESSAGE, () => reload());
+
   const handleUserSelect = async (userId) => {
     setSelectedUser(userId);
-
+    socket.emit(SocketEvent.JOIN_CHAT, user.id);
     const allMessages = await messageService.loadMessagesBetweenUsers(
       user.id,
       userId
@@ -68,6 +89,10 @@ const ChatLayout = () => {
     );
 
     // Trigger socket
+    socket.emit(SocketEvent.MESSAGE_SENT, {
+      sentTo: selectedUser,
+      sentFrom: user.id,
+    });
     setNewMessage("");
   };
 
@@ -211,7 +236,13 @@ const ChatLayout = () => {
                     <TextField
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
-                      label={ selectedUser && users ? `Send a message to ${users.find((u) => u.id === selectedUser).fullName}` : 'Type a message'}
+                      label={
+                        selectedUser && users
+                          ? `Send a message to ${
+                              users.find((u) => u.id === selectedUser).fullName
+                            }`
+                          : "Type a message"
+                      }
                       variant="outlined"
                       fullWidth
                       style={{ marginRight: "10px" }}
