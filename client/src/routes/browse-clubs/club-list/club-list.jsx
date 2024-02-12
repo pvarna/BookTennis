@@ -1,33 +1,7 @@
-import { Typography, Container, TablePagination } from '@mui/material';
+import { TablePagination } from '@mui/material';
 import { Link } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
 import { Flex } from '../../../components/flex';
-
-const NoClubsFound = () => {
-  return (
-    <Container
-      maxWidth='xs'
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '50vh',
-      }}
-    >
-      <Flex flexDirection='column' sx={{ alignItems: 'center' }}>
-        <SearchIcon sx={{ fontSize: '80px', color: '#EE7214' }} />
-        <Typography component='h1' variant='h5' sx={{ mt: 2 }}>
-          No results match your search
-        </Typography>
-        <Typography variant='body2' color='textSecondary' sx={{ mt: 1 }}>
-          Try to change your filters and search again. Remove all filters and
-          search again to show all clubs and courts.
-        </Typography>
-      </Flex>
-    </Container>
-  );
-};
+import { EmptyTable } from '../../../components/empty-table/empty-table';
 
 export const ClubList = ({
   clubs,
@@ -39,7 +13,13 @@ export const ClubList = ({
   onRowsPerPageChange,
 }) => {
   if (clubs.length === 0 && !isInitial) {
-    return <NoClubsFound />;
+    return (
+      <EmptyTable
+        title='No results match your search'
+        content='Try to change your filters and search again. Remove all filters and
+    search again to show all clubs and courts.'
+      />
+    );
   }
 
   return (

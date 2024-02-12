@@ -5,7 +5,7 @@ export const browseClubsSlug = 'browse-clubs';
 export const profileSlug = 'profile';
 export const manageClubsSlug = 'manage-clubs';
 export const chatSlug = 'chat';
-export const clubsApprovalSlug = 'clubs-approval';
+export const adminSlug = 'admin';
 export const clubSlug = 'club';
 export const landingPageSlug = 'landing-page';
 
@@ -15,6 +15,6 @@ export const registerPath = `${root}${registerSlug}`;
 export const profilePath = `${root}${profileSlug}`;
 export const manageClubsPath = `${root}${manageClubsSlug}`;
 export const chatPath = `${root}${chatSlug}`;
-export const clubsApprovalPath = `${root}${clubsApprovalSlug}`;
+export const adminPath = `${root}${adminSlug}`;
 export const clubPath = `${root}${clubSlug}`;
 export const landingPagePath = `${root}${landingPageSlug}`;

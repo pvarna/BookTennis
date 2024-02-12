@@ -10,11 +10,11 @@ import {
 import { useState } from 'react';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { ErrorContainer } from '../../components/error-container';
-import { clubService } from '../../services/club-service';
 import { Flex } from '../../components/flex';
 import { Cities } from '../../constants';
 import { successToast } from '../../utils/customToast';
 import { Popup } from '../../components/popup/popup';
+import { clubCreationRequestService } from '../../services/club-creation-request-service';
 
 const ClubForm = ({ formData, setFormData, onSubmit, error, onCancel }) => {
   return (
@@ -69,7 +69,7 @@ const ClubForm = ({ formData, setFormData, onSubmit, error, onCancel }) => {
           type='submit'
           sx={{ backgroundColor: '#EE7214', width: '200px' }}
         >
-          Create Club
+          Submit request
         </Button>
         <Button
           variant='contained'
@@ -99,9 +99,9 @@ export const CreateClubForm = () => {
   } = useAsyncAction(async (event) => {
     event.preventDefault();
 
-    await clubService.createClub(formData);
+    await clubCreationRequestService.createRequest(formData);
     setIsOpen(false);
-    successToast('Club created successfully!');
+    successToast('Request submitted successfully!');
   });
 
   if (loading) {
@@ -119,7 +119,7 @@ export const CreateClubForm = () => {
       </Button>
       <Popup
         open={isOpen}
-        title={'Create a tennis club'}
+        title={'Create a tennis club request'}
         content={
           <ClubForm
             formData={formData}
