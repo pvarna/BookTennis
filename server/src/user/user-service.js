@@ -21,6 +21,10 @@ class UserService {
       .where("id", userId);
   }
 
+  async getAllUsers() {
+    return await UserModel.query().select();
+  }
+
   async login(email, password) {
     const user = await UserModel.query().findOne({ email });
     const areIdentical = await compare(password, user.password);

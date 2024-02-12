@@ -23,21 +23,24 @@ export const MyClubs = () => {
   }
 
   return (
-    <Box>
-      <Typography variant='h4'>My Clubs</Typography>
-      {data.clubs.length === 0 ? (
+    <Box sx={{alignItems:'center', width: '100%'}}>
+      <Typography variant="h4" sx={{paddingBottom: '50px'}}>My Clubs</Typography>
+      {data.clubs.length === 0 && (
         <EmptyTable
-          title="You don't have any clubs yet"
-          content='Try to create a request for a club'
-        />
-      ) : (
-        <BasicTable headers={['', 'Name', 'City', 'Actions']}>
-          {data.clubs.map((club) => (
-            <ClubDetailsRow key={club.id} club={club} onAction={reload} />
-          ))}
-        </BasicTable>
+        title="You don't have any clubs yet"
+        content='Try to create a request for a club'
+      />
       )}
-      {!!error?.message && <ErrorContainer error={'Error loading club'} />}
+      {data.clubs.length > 0 && (
+        <BasicTable headers={['', 'Name', 'City', 'Actions']}>
+        {data.clubs.map((club) => (
+          <ClubDetailsRow key={club.id} club={club} onAction={reload} />
+        ))}
+      </BasicTable>
+      )}
+
+      {!!error?.message && <ErrorContainer error={"Error loading club"} />}
     </Box>
+
   );
 };

@@ -23,7 +23,7 @@ export const ClubList = ({
   }
 
   return (
-    <Flex flexDirection='column' sx={{ my: 6, mx: 4, alignItems: 'center' }}>
+    <Flex flexDirection='column' sx={{ my: 6, mx: 4, alignItems: 'center', width:"100%" }}>
       {clubs.map((club) => (
         <Flex key={club.id}>
           <Link to={`/club/${club.id}`}>{`${club.name}, ${club.city}`}</Link>

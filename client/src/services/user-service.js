@@ -44,6 +44,12 @@ class UserService {
     this.userStorage.delete();
     EventBus.emit(EVENTS.logout);
   }
+
+  async loadAllUsers(){
+    const data = await this.httpService.get('/user/');
+
+    return data;
+  }
 }
 
 export const userService = new UserService();
