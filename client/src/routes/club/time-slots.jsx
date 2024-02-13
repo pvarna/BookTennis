@@ -41,7 +41,7 @@ export const TimeSlots = ({
     loading,
   } = useAsyncAction(async () => {
     await reservationService.makeReservation({
-      startingTime: date.startOf('day').plus({ hours: selectedSlot }),
+      startingTime: date.startOf("day").plus({ hours: selectedSlot }),
       userId: user?.id,
       courtId,
     });
@@ -49,7 +49,7 @@ export const TimeSlots = ({
     onReservationMade();
     setIsOpen(false);
     setSelectedSlot(undefined);
-    successToast('Reservation made successfully!');
+    successToast("Reservation made successfully!");
   });
 
   const reservedHours = useMemo(
@@ -66,14 +66,32 @@ export const TimeSlots = ({
     [reservations, date]
   );
 
+  const userReservedHours = useMemo(
+    () =>
+      reservations
+        .filter(
+          (r) =>
+            areSameDate(DateTime.fromISO(r.startTime), date) &&
+            r.userId === user.id
+        )
+        .map((r) => {
+          const start = DateTime.fromISO(r.startTime).hour;
+          const end = start + r.durationInMinutes / 60 - 1;
+
+          return range(start, end);
+        })
+        .flat(),
+    [reservations, date, user.id]
+  );
+
   if (loading) {
     return <CircularProgress />;
   }
 
   return (
     <Flex
-      flexDirection='row'
-      sx={{ alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}
+      flexDirection="row"
+      sx={{ alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}
     >
       {slots.map((slot) => (
         <Button
@@ -84,13 +102,17 @@ export const TimeSlots = ({
             setIsOpen(true);
           }}
           sx={{
-            border: '1px solid black',
-            color: 'black',
-            padding: '8px',
-            borderRadius: '8px',
+            border: "1px solid black",
+            color: "black",
+            padding: "8px",
+            borderRadius: "8px",
             backgroundColor: alpha(
-              reservedHours.includes(slot) ? "#ff9999" : "#BED754",
-              isPast(date, slot) ? 0.5 : 1
+              reservedHours.includes(slot) && !userReservedHours.includes(slot)
+                ? "#ff9999"
+                : userReservedHours.includes(slot)
+                ? "#EE7214"
+                : "#BED754",
+              isPast(date, slot)   ? 0.5 : 1
             ),
           }}
         >{`${slot}:00 - ${slot + 1}:00`}</Button>
