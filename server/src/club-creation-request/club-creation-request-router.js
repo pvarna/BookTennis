@@ -41,11 +41,6 @@ clubCreationRequestRouter.post(
   requestHandler(
     async (req, res) => {
       const user = res.locals.user;
-
-      if (!user.isAdmin) {
-        throw new AuthorizationError('Insufficient Permissions');
-      }
-
       const { requestDetails } = req.body;
 
       await clubCreationRequestService.createRequest(requestDetails, user.id);
