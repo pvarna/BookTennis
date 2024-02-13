@@ -18,7 +18,7 @@ class ClubCreationRequestService {
   }
 
   async cancelRequest(requestId) {
-    await ClubCreationRequestModel.query(transaction)
+    await ClubCreationRequestModel.query()
       .findById(requestId)
       .update({ status: 'Cancelled' });
   }
