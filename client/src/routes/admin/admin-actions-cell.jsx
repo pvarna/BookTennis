@@ -3,14 +3,14 @@ import {
   IconButton,
   TableCell,
   Typography,
-} from '@mui/material';
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
-import { Modal } from '../../components/modal/modal';
-import { useAsyncAction } from '../../hooks/use-async-action';
-import { ErrorContainer } from '../../components/error-container';
-import { clubCreationRequestService } from '../../services/club-creation-request-service';
+} from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
+import { Modal } from "../../components/modal/modal";
+import { useAsyncAction } from "../../hooks/use-async-action";
+import { ErrorContainer } from "../../components/error-container";
+import { clubCreationRequestService } from "../../services/club-creation-request-service";
 
 export const AdminActionsCell = ({ request, onAction }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,7 @@ export const AdminActionsCell = ({ request, onAction }) => {
   } = useAsyncAction(async () => {
     await clubCreationRequestService.changeRequestStatus(
       request.id,
-      accepting ? 'Accepted' : 'Cancelled'
+      accepting ? "Accepted" : "Cancelled"
     );
 
     onAction();
@@ -34,19 +34,19 @@ export const AdminActionsCell = ({ request, onAction }) => {
     return <CircularProgress />;
   }
 
-  if (request.status !== 'Pending') {
-    return <TableCell align='center'>-</TableCell>;
+  if (request.status !== "Pending") {
+    return <TableCell align="center">-</TableCell>;
   }
 
   return (
-    <TableCell align='center'>
+    <TableCell align="center">
       <IconButton
         onClick={() => {
           setIsOpen(true);
           setAccepting(true);
         }}
       >
-        <DoneIcon />
+        <DoneIcon color="success" />
       </IconButton>
       <IconButton
         onClick={() => {
@@ -54,19 +54,19 @@ export const AdminActionsCell = ({ request, onAction }) => {
           setAccepting(false);
         }}
       >
-        <CloseIcon />
+        <CloseIcon color="error" />
       </IconButton>
       <Modal
         isOpen={isOpen}
-        title='Are you sure?'
+        title="Are you sure?"
         content={
           <>
             <Typography>
-              You are going to {accepting ? 'accept' : 'cancel'} this request,
+              You are going to {accepting ? "accept" : "cancel"} this request,
               are you sure?
             </Typography>
             {!!error?.message && (
-              <ErrorContainer error={'Something went wrong'} />
+              <ErrorContainer error={"Something went wrong"} />
             )}
           </>
         }
