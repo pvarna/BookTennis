@@ -40,10 +40,12 @@ const AuthenticatedUser = () => {
         </Button>
       )}
 
-      <Button color='inherit' onClick={() => navigate(manageClubsPath)}>
-        Manage clubs
-      </Button>
-      {user.isAdmin && (
+      {!pathname.includes(manageClubsPath) && (
+        <Button color='inherit' onClick={() => navigate(manageClubsPath)}>
+          Manage clubs
+        </Button>
+      )}
+      {user.isAdmin && !pathname.includes(adminPath) && (
         <Button color='inherit' onClick={() => navigate(adminPath)}>
           Admin
         </Button>

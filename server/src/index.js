@@ -16,7 +16,7 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import { socketAuthMiddleware } from "./middlewares/socket-auth-middleware.js";
 import { messageRouter, onMessageSent } from "./message/message-router.js";
-import { SocketEmittedEvents, SocketEvent } from "./types.js";
+import { SocketEvent } from "./types.js";
 
 const port = config.server.port;
 
@@ -42,11 +42,6 @@ io.on("connection", (socket) => {
   });
   socket.on(SocketEvent.MESSAGE_SENT, (data) => {
     onMessageSent(data.sentTo, data.sentFrom);
-    console.log(data)
-  });
-
-  socket.on("disconnect", () => {
-    console.log("user disconnected", socket.id);
   });
 });
 

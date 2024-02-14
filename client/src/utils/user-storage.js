@@ -2,7 +2,9 @@ import { LocalStorage } from './local-storage';
 import { jwtDecode } from 'jwt-decode';
 
 export class UserStorage {
-  localStorage = new LocalStorage('userToken');
+  constructor() {
+    this.localStorage = new LocalStorage('userToken');
+  }
 
   save(token) {
     this.localStorage.save(token);
