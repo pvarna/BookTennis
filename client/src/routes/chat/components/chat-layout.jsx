@@ -81,7 +81,7 @@ const ChatLayout = () => {
   const handleSendMessage = async () => {
     if (newMessage.trim() === "") return;
 
-    const sentMessage = await messageService.sendMessageBetweenUsers(
+    await messageService.sendMessageBetweenUsers(
       user.id,
       selectedUser,
       newMessage,
