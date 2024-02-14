@@ -6,31 +6,6 @@ import { AuthenticationError, AuthorizationError } from '../utils/errors.js';
 
 export const courtRouter = new Router({ mergeParams: true });
 
-courtRouter.get(
-  '/',
-  authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
-
-    res.send(
-      `Fetch the information about all courts of a tennis club with id ${clubId}`
-    );
-  })
-);
-
-courtRouter.get(
-  '/:courtId',
-  authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
-    const courtId = +req.params.courtId;
-
-    res.send(
-      `Fetch the information about a court with id ${courtId} in a tennis club with id ${clubId}`
-    );
-  })
-);
-
 courtRouter.post(
   '/',
   authMiddleware,

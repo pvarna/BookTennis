@@ -17,18 +17,6 @@ export function onMakeReservation() {
 }
 
 reservationRouter.get(
-  '/:reservationId',
-  authMiddleware,
-  requestHandler((req, res) => {
-    const reservationId = +req.params.reservationId;
-
-    res.send(
-      `Fetch the informations about a reservation with id ${reservationId}`
-    );
-  })
-);
-
-reservationRouter.get(
   '/user/:userId',
   authMiddleware,
   requestHandler(
@@ -56,18 +44,6 @@ reservationRouter.get(
   )
 );
 
-reservationRouter.get(
-  '/club/:clubId',
-  authMiddleware,
-  requestHandler((req, res) => {
-    const clubId = +req.params.clubId;
-
-    res.send(
-      `Fetch the information about all reservations for a a tennis club with id ${clubId}`
-    );
-  })
-);
-
 reservationRouter.post(
   '/',
   authMiddleware,
@@ -77,20 +53,6 @@ reservationRouter.post(
     await reservationService.makeReservation(userId, courtId, startingTime);
 
     res.status(200).send({});
-  })
-);
-
-reservationRouter.put(
-  '/:reservationId',
-  authMiddleware,
-  requestHandler((req, res) => {
-    const reservationId = +req.params.reservationId;
-
-    res.send(
-      `Edit the information about a reservation with id ${reservationId}: ${JSON.stringify(
-        req.body
-      )}`
-    );
   })
 );
 
