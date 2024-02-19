@@ -41,11 +41,15 @@ class UserService {
   }
 
   logout() {
-    this.userStorage.delete();
     EventBus.emit(EVENTS.logout);
   }
 
-  async loadAllUsers(){
+  async deleteSession() {
+    await this.httpService.delete('user/');
+    this.userStorage.delete();
+  }
+
+  async loadAllUsers() {
     const data = await this.httpService.get('/user/');
 
     return data;

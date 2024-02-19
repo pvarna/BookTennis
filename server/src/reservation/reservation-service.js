@@ -12,8 +12,11 @@ class ReservationService {
     }
 
     const isFreeSlot =
-      (await ReservationsModel.query().where('startTime', startTime)).length ===
-      0;
+      (
+        await ReservationsModel.query()
+          .where('startTime', startTime)
+          .andWhere('courtId', courtId)
+      ).length === 0;
     if (!isFreeSlot) {
       throw new BadRequestError('Slot is already taken');
     }
